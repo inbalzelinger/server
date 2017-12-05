@@ -33,7 +33,7 @@ void Server::start() {
 
 
 
-    if (bind(serverSocket,(struct sockaddr*)&serverAddress, sizeof(serverAddress)==-1)) {
+    if (bind(serverSocket,(struct sockaddr*)&serverAddress, sizeof(serverAddress))==-1) {
         throw "ERROR ON BINDING";
     }
 
