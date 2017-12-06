@@ -22,8 +22,7 @@ Server::Server(int port): port(port),serverSocket(0) {
 }
 void Server::start() {
 
-    int X = 1;
-    int O = 2;
+
 
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
@@ -70,19 +69,20 @@ void Server::start() {
             throw "ERROR ON ACCEPT";
         }
         cout<<"client connected"<<endl;
-
+        char  X ='1';
+        char O ='2';
 
         int n = write(clientSocket1 , &X , sizeof(X));
+        if (n == -1) {
+            cout<<"error writing to socket"<<endl;
+        }
+        n = write(clientSocket2 , &O , sizeof(O));
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
         handleClient(clientSocket1 , clientSocket2);
         close(clientSocket1);
 
-        n = write(clientSocket2 , &O , sizeof(O));
-        if (n == -1) {
-            cout<<"error writing to socket"<<endl;
-        }
         handleClient(clientSocket2 , clientSocket1);
         close(clientSocket2);
     }
