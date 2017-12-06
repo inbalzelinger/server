@@ -52,13 +52,6 @@ void Server::start() {
         }
         cout<<"client connected"<<endl;
 
-        string s = "wating for another player to join";
-
-        int t = write(clientSocket1 ,&s , sizeof(s));
-
-        if(t == -1) {
-            throw "Error writing n to socket";
-        }
 
 
         cout<<"waiting for another player to join"<<endl;
@@ -93,6 +86,9 @@ void Server::start() {
 void Server::stop() {
     close(serverSocket);
 }
+
+
+
 void Server::handleClient(int clientSocket1,int clientSocket2) {
 
     int x , y;
