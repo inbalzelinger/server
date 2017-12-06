@@ -52,8 +52,6 @@ void Server::start() {
         }
         cout<<"client connected"<<endl;
 
-
-
         cout<<"waiting for another player to join"<<endl;
 
         int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
@@ -91,10 +89,9 @@ void Server::stop() {
 
 void Server::handleClient(int clientSocket1,int clientSocket2) {
 
-    int x , y;
-
+    char msg[7];
     while (true) {
-        int n = read(clientSocket1 , &x , sizeof(x));
+        int n = read(clientSocket1 , msg , sizeof(msg));
         if (n == -1) {
             cout<<"Error reading x"<<endl;
             return;
@@ -104,24 +101,7 @@ void Server::handleClient(int clientSocket1,int clientSocket2) {
             return;;
         }
 
-        n = read(clientSocket1 , &y , sizeof(y));
-        if (n == -1) {
-            cout<<"Error reading y"<<endl;
-            return;
-        }
-        if (n == 0) {
-            cout<<"client disconnected"<<endl;
-            return;
-        }
-
-        n = write(clientSocket2 , &x , sizeof(x));
-
-        if (n == -1) {
-            cout<<"Error reading y"<<endl;
-            return;
-        }
-
-        n = write(clientSocket2 , &y , sizeof(y));
+        n = write(clientSocket2 , &msg , sizeof(msg));
 
         if (n == -1) {
             cout<<"Error reading y"<<endl;
