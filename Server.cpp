@@ -54,9 +54,9 @@ void Server::start() {
 
         string s = "wating for another player to join";
 
-        int n = write(clientSocket1 ,&s , sizeof(s));
+        int t = write(clientSocket1 ,&s , sizeof(s));
 
-        if(n == -1) {
+        if(t == -1) {
             throw "Error writing n to socket";
         }
 
