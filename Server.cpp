@@ -99,7 +99,6 @@ void Server::handleClient(int clientSocket1,int clientSocket2) {
             return;;
         }
 
-
         n = read(clientSocket1 , &y , sizeof(y));
         if (n == -1) {
             cout<<"Error reading y"<<endl;
