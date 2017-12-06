@@ -53,6 +53,15 @@ void Server::start() {
         }
         cout<<"client connected"<<endl;
 
+        string s = "wating for another player to join";
+
+        int n = write(clientSocket1 ,&s , sizeof(s));
+
+        if(n == -1) {
+            throw "Error writing n to socket";
+        }
+
+
         cout<<"waiting for another player to join"<<endl;
 
         int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
@@ -123,6 +132,11 @@ void Server::handleClient(int clientSocket1,int clientSocket2) {
             return;
         }
     }
+}
+
+
+int Server::getSocket() {
+    return this->serverSocket;
 }
 
 

@@ -17,6 +17,7 @@ private:
     int serverSocket;
 
     void handleClient(int clientSocket1, int clientSocket2);
+    int getSocket();
 };
 
 #endif //SERVER_SERVER_H
