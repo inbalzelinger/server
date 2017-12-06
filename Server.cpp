@@ -67,16 +67,15 @@ void Server::start() {
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
-        handleClient(clientSocket1);
+        handleClient(clientSocket1 , clientSocket2);
         close(clientSocket1);
 
         n = write(clientSocket2 , &O , sizeof(O));
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
-        handleClient(clientSocket2);
+        handleClient(clientSocket2 , clientSocket1);
         close(clientSocket2);
-
     }
 }
 
@@ -85,11 +84,46 @@ void Server::start() {
 void Server::stop() {
     close(serverSocket);
 }
-void Server::handleClient(int clientSocket) {
+void Server::handleClient(int clientSocket1,int clientSocket2) {
+
+    int x , y;
+
+    while (true) {
+        int n = read(clientSocket1 , &x , sizeof(x));
+        if (n == -1) {
+            cout<<"Error reading x"<<endl;
+            return;
+        }
+        if (n == 0) {
+            cout<<"client disconnected"<<endl;
+            return;;
+        }
 
 
+        n = read(clientSocket1 , &y , sizeof(y));
+        if (n == -1) {
+            cout<<"Error reading y"<<endl;
+            return;
+        }
+        if (n == 0) {
+            cout<<"client disconnected"<<endl;
+            return;
+        }
 
-    cout<<"handleClient"<<endl;
+        n = write(clientSocket2 , &x , sizeof(x));
+
+        if (n == -1) {
+            cout<<"Error reading y"<<endl;
+            return;
+        }
+
+        n = write(clientSocket2 , &y , sizeof(y));
+
+        if (n == -1) {
+            cout<<"Error reading y"<<endl;
+            return;
+        }
+    }
 }
 
 
