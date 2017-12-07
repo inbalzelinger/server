@@ -18,6 +18,9 @@ private:
 
     bool handleClient(int clientSocket1, int clientSocket2);
     int getSocket();
+    void sendMove(int clientSocket);
+
+
 };
 
 #endif //SERVER_SERVER_H

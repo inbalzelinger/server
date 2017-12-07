@@ -40,11 +40,14 @@ void Server::start() {
     struct  sockaddr_in clientAddress;
     socklen_t  clientAddressLen;
     while (true){
+
         cout<<"waiting for clients connections.."<<endl;
         int clientSocket1 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
         if(clientSocket1 == -1) {
             throw "ERROR ON ACCEPT";
         }
+
+
         cout<<"client connected"<<endl;
 
         cout<<"waiting for another player to join"<<endl;
@@ -67,17 +70,18 @@ void Server::start() {
             cout<<"error writing to socket"<<endl;
         }
         bool keep = true, p1 = true,p2 = true;
-        while (keep) {
             cout << "hi" << endl;
-            p1 = handleClient(clientSocket1, clientSocket2);
-            //close(clientSocket1);
 
-            p2 = handleClient(clientSocket2, clientSocket1);
-            // close(clientSocket2);
+        p1 = handleClient(clientSocket1, clientSocket2);
+
+           // p2 = handleClient(clientSocket2, clientSocket1);
+
+              close(clientSocket1);
+              close(clientSocket2);
             if(!(p1) || !(p2)) {
                 keep = false;
             }
-        }
+
     }
 }
 
@@ -92,25 +96,78 @@ void Server::stop() {
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
     cout << "jjjjjjjjjjjjjjjjjj";
     char msg[7];
-    int n = read(clientSocket1, &msg, sizeof(msg));
-    if (n == -1) {
-        cout << "Error reading x" << endl;
-        return false;
-    }
-    if (n == 0) {
-        cout << "client disconnected" << endl;
-        return false;
-    }
-    cout << int(msg[0]) << " " << int(msg[1]) << endl;
+    bool x = false;
 
-    n = write(clientSocket2, &msg, sizeof(msg));
+    while (true) {
 
-    if (n == -1) {
-        cout << "Error reading y" << endl;
-        return false;
+
+        int n = read(clientSocket1, &msg, sizeof(msg));
+
+        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+
+        if (n == -1) {
+            cout << "Error reading x" << endl;
+            return false;
+        }
+        if (n == 0) {
+            cout << "client disconnected" << endl;
+            return false;
+        }
+        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+        n = write(clientSocket2, &msg, sizeof(msg));
+
+        if (n == -1) {
+            cout << "Error writing y" << endl;
+            return false;
+        }
+
+
+
+        if (x == true) {
+            n = read(clientSocket2, &msg, sizeof(msg));
+
+        }
+
+         n = read(clientSocket2, &msg, sizeof(msg));
+
+        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+
+        if (n == -1) {
+            cout << "Error reading x" << endl;
+            return false;
+        }
+        if (n == 0) {
+            cout << "client disconnected" << endl;
+            return false;
+        }
+        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+        n = write(clientSocket1, &msg, sizeof(msg));
+
+        if (n == -1) {
+            cout << "Error writing y" << endl;
+            return false;
+        }
+
+        n = read(clientSocket1, &msg, sizeof(msg));
+        x = true;
+
     }
+
+
 }
 
+
+
+
+void Server::sendMove(int clientSocket) {
+    char x[2] = {'1' , '2' };
+    int n = write(clientSocket , &x , sizeof(x));
+    if (n == -1) {
+        cout << "Error in sendmove" << endl;
+        return;
+    }
+
+}
 
 
 
