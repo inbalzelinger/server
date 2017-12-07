@@ -22,8 +22,6 @@ Server::Server(int port): port(port),serverSocket(0) {
 }
 void Server::start() {
 
-
-
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         throw "ERROR OPENNING SOCKET";
@@ -33,9 +31,6 @@ void Server::start() {
     serverAddress.sin_family=AF_INET;
     serverAddress.sin_addr.s_addr=INADDR_ANY;
     serverAddress.sin_port=htons(port);
-
-
-
     if (bind(serverSocket,(struct sockaddr*)&serverAddress, sizeof(serverAddress))==-1) {
         throw "ERROR ON BINDING";
     }
@@ -71,11 +66,18 @@ void Server::start() {
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
-        handleClient(clientSocket1 , clientSocket2);
-        close(clientSocket1);
+        bool keep = true, p1 = true,p2 = true;
+        while (keep) {
+            cout << "hi" << endl;
+            p1 = handleClient(clientSocket1, clientSocket2);
+            //close(clientSocket1);
 
-        handleClient(clientSocket2 , clientSocket1);
-        close(clientSocket2);
+            p2 = handleClient(clientSocket2, clientSocket1);
+            // close(clientSocket2);
+            if(!(p1) || !(p2)) {
+                keep = false;
+            }
+        }
     }
 }
 
@@ -87,28 +89,30 @@ void Server::stop() {
 
 
 
-void Server::handleClient(int clientSocket1,int clientSocket2) {
-
+bool Server::handleClient(int clientSocket1,int clientSocket2) {
+    cout << "jjjjjjjjjjjjjjjjjj";
     char msg[7];
-    while (true) {
-        int n = read(clientSocket1 , msg , sizeof(msg));
-        if (n == -1) {
-            cout<<"Error reading x"<<endl;
-            return;
-        }
-        if (n == 0) {
-            cout<<"client disconnected"<<endl;
-            return;;
-        }
+    int n = read(clientSocket1, &msg, sizeof(msg));
+    if (n == -1) {
+        cout << "Error reading x" << endl;
+        return false;
+    }
+    if (n == 0) {
+        cout << "client disconnected" << endl;
+        return false;
+    }
+    cout << int(msg[0]) << " " << int(msg[1]) << endl;
 
-        n = write(clientSocket2 , &msg , sizeof(msg));
+    n = write(clientSocket2, &msg, sizeof(msg));
 
-        if (n == -1) {
-            cout<<"Error reading y"<<endl;
-            return;
-        }
+    if (n == -1) {
+        cout << "Error reading y" << endl;
+        return false;
     }
 }
+
+
+
 
 
 int Server::getSocket() {
