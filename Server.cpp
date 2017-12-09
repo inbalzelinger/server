@@ -139,11 +139,17 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
         }
 
 
-
-            n = read(clientSocket1, &msg, sizeof(msg));
-
-
+        if (msg[0] != 'N' && msg[0] != 'o') {
+            cout<<"llll";
             x = true;
+            n = read(clientSocket1, &msg, sizeof(msg));
+        } else {
+            x = false;
+        }
+
+
+
+
 
 
     }
