@@ -69,18 +69,14 @@ void Server::start() {
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
-        bool keep = true, p1 = true,p2 = true;
+        bool p1 = true;
+
             cout << "hi" << endl;
 
         p1 = handleClient(clientSocket1, clientSocket2);
 
-           // p2 = handleClient(clientSocket2, clientSocket1);
-
-              close(clientSocket1);
-              close(clientSocket2);
-            if(!(p1) || !(p2)) {
-                keep = false;
-            }
+        close(clientSocket1);
+        close(clientSocket2);
 
     }
 }
@@ -99,10 +95,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
     bool x = false;
 
     while (true) {
-
-
         int n = read(clientSocket1, &msg, sizeof(msg));
-
         cout << int(msg[0]) << " " << int(msg[1]) << endl;
 
         if (n == -1) {
@@ -121,11 +114,8 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             return false;
         }
 
-
-
         if (x == true) {
             n = read(clientSocket2, &msg, sizeof(msg));
-
         }
 
          n = read(clientSocket2, &msg, sizeof(msg));
@@ -147,12 +137,17 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             cout << "Error writing y" << endl;
             return false;
         }
-
         n = read(clientSocket1, &msg, sizeof(msg));
-        x = true;
 
+
+
+        if (msg[1] == 'n' && msg[2] == 'o') {
+            x = false;
+        } else {
+            x = true;
+
+        }
     }
-
 
 }
 
