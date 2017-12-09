@@ -138,20 +138,14 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             return false;
         }
 
-        if (strcmp(msg , "NoMove") != 0) {
-            cout<<"llll1";
+
+
             n = read(clientSocket1, &msg, sizeof(msg));
-        }
 
 
-
-        if (strcmp(msg , "NoMove") == 0) {
-            cout<<"llll";
-            x = false;
-        } else {
             x = true;
 
-        }
+
     }
 
 }
