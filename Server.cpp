@@ -94,16 +94,14 @@ void Server::stop() {
 
 
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
-    cout << "jjjjjjjjjjjjjjjjjj";
     char msg[7];
     bool x = false;
 
-    while (true) {
-
+    while (msg[0]!='E'&& msg[1]!='N'&& msg[2]!='D') {
 
         int n = read(clientSocket1, &msg, sizeof(msg));
 
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+        cout<<"read " << int(msg[0]) << " " << int(msg[1]) << endl;
 
         if (n == -1) {
             cout << "Error reading x" << endl;
@@ -113,7 +111,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             cout << "client disconnected" << endl;
             return false;
         }
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+        cout<<"write " << int(msg[0]) << " " << int(msg[1]) << endl;
         n = write(clientSocket2, &msg, sizeof(msg));
 
         if (n == -1) {
@@ -123,14 +121,13 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
 
 
 
-        if (x == true) {
+        if (x) {
             n = read(clientSocket2, &msg, sizeof(msg));
-
         }
 
          n = read(clientSocket2, &msg, sizeof(msg));
 
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+        cout<<"read " << int(msg[0]) << " " << int(msg[1]) << endl;
 
         if (n == -1) {
             cout << "Error reading x" << endl;
@@ -140,7 +137,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             cout << "client disconnected" << endl;
             return false;
         }
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+        cout<<"write  " << int(msg[0]) << " " << int(msg[1]) << endl;
         n = write(clientSocket1, &msg, sizeof(msg));
 
         if (n == -1) {
