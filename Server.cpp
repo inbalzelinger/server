@@ -24,7 +24,7 @@ void Server::start() {
 
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
-        throw "ERROR OPENNING SOCKET";
+        throw "ERROR OPENING SOCKET";
     }
     struct sockaddr_in serverAddress;
     bzero((void*)&serverAddress, sizeof(serverAddress));
@@ -47,13 +47,9 @@ void Server::start() {
             throw "ERROR ON ACCEPT";
         }
 
-
         cout<<"client connected"<<endl;
-
-        cout<<"waiting for another player to join"<<endl;
         char  X ='1';
         char O ='2';
-
         int n = write(clientSocket1 , &X , sizeof(X));
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
@@ -65,7 +61,13 @@ void Server::start() {
             throw "ERROR ON ACCEPT";
         }
         cout<<"client connected"<<endl;
+        cout<<"waiting for another player to join"<<endl;
 
+
+        n = write(clientSocket1 , &X , sizeof(X));
+        if (n == -1) {
+            cout<<"error writing to socket"<<endl;
+        }
         n = write(clientSocket2 , &O , sizeof(O));
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
