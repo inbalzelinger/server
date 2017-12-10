@@ -48,6 +48,7 @@ void Server::start() {
         }
 
         cout<<"client connected"<<endl;
+        cout<<"waiting for another player to join"<<endl;
         char  X ='1';
         char O ='2';
         int n = write(clientSocket1 , &X , sizeof(X));
@@ -61,8 +62,6 @@ void Server::start() {
             throw "ERROR ON ACCEPT";
         }
         cout<<"client connected"<<endl;
-        cout<<"waiting for another player to join"<<endl;
-
 
         n = write(clientSocket1 , &X , sizeof(X));
         if (n == -1) {
