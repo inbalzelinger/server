@@ -12,13 +12,17 @@ public:
     void start();
     void  stop();
 
-private:
-    int port;
-    int serverSocket;
 
     bool handleClient(int clientSocket1, int clientSocket2);
     int getSocket();
     void sendMove(int clientSocket);
+
+private:
+    int port;
+    int serverSocket;
+
+
+
 
 
 };
