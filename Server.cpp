@@ -71,8 +71,6 @@ void Server::start() {
         }
         bool p1 = true;
 
-            cout << "hi" << endl;
-
         p1 = handleClient(clientSocket1, clientSocket2);
 
         close(clientSocket1);
@@ -96,11 +94,8 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
         int n = read(clientSocket1, &msg, sizeof(msg));
 
         if (msg[0] == 'E' && msg[1] == 'N' && msg[2] == 'D') {
-            cout<<"ccccc 1";
             return false;
         }
-
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
 
         if (n == -1) {
             cout << "Error reading x" << endl;
@@ -110,7 +105,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             cout << "client disconnected" << endl;
             return false;
         }
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+
         n = write(clientSocket2, &msg, sizeof(msg));
 
         if (n == -1) {
@@ -118,22 +113,17 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             return false;
         }
 
+        //for wating to the second client to write move
         if (x == true) {
             n = read(clientSocket2, &msg, sizeof(msg));
         }
 
-
-
          n = read(clientSocket2, &msg, sizeof(msg));
 
         if (msg[0] == 'E' && msg[1] == 'N' && msg[2] == 'D') {
-            cout<<"ccccc 2";
-
             return false;
         }
 
-
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
 
         if (n == -1) {
             cout << "Error reading x" << endl;
@@ -143,16 +133,16 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             cout << "client disconnected" << endl;
             return false;
         }
-        cout << int(msg[0]) << " " << int(msg[1]) << endl;
+
         n = write(clientSocket1, &msg, sizeof(msg));
 
         if (n == -1) {
             cout << "Error writing y" << endl;
             return false;
         }
-
-            x = true;
-            n = read(clientSocket1, &msg, sizeof(msg));
+        x = true;
+        //for wating to the forst client to write move
+        n = read(clientSocket1, &msg, sizeof(msg));
 
     }
 
