@@ -17,7 +17,6 @@ int main() {
 
     Server s(atoi(port.c_str()));
 
-
     try {
         s.start();
     } catch (const char* msg) {

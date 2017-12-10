@@ -51,10 +51,10 @@ void Server::start() {
         cout<<"waiting for another player to join"<<endl;
         char  X ='1';
         char O ='2';
-        int n = write(clientSocket1 , &X , sizeof(X));
-        if (n == -1) {
-            cout<<"error writing to socket"<<endl;
-        }
+       // int n = write(clientSocket1 , &X , sizeof(X));
+      //  if (n == -1) {
+        //    cout<<"error writing to socket"<<endl;
+       // }
 
         int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
 
@@ -63,7 +63,7 @@ void Server::start() {
         }
         cout<<"client connected"<<endl;
 
-        n = write(clientSocket1 , &X , sizeof(X));
+		int n = write(clientSocket1 , &X , sizeof(X));
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
@@ -93,8 +93,10 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
     char msg[7];
     bool x = false;
 
-    while (true) {
-        int n = read(clientSocket1, &msg, sizeof(msg));
+
+	while (true) {
+
+		int n = read(clientSocket1, &msg, sizeof(msg));
         if (n == -1) {
             cout << "Error reading x" << endl;
             return false;
