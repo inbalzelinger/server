@@ -71,8 +71,6 @@ void Server::start() {
         }
         bool p1 = true;
 
-            cout << "hi" << endl;
-
         p1 = handleClient(clientSocket1, clientSocket2);
 
         close(clientSocket1);
@@ -90,7 +88,6 @@ void Server::stop() {
 
 
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
-    cout << "jjjjjjjjjjjjjjjjjj";
     char msg[7];
     bool x = false;
 
@@ -139,7 +136,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
         }
 
 
-        if (msg[0] != 'N' && msg[0] != 'o') {
+        if (msg[0] != 'N' && msg[1] != 'o') {
             cout<<"llll";
             x = true;
             n = read(clientSocket1, &msg, sizeof(msg));
