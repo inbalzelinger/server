@@ -90,12 +90,16 @@ void Server::stop() {
 
 
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
-    cout << "jjjjjjjjjjjjjjjjjj";
     char msg[7];
     bool x = false;
-
     while (true) {
         int n = read(clientSocket1, &msg, sizeof(msg));
+
+        if (msg[0] == 'E' && msg[1] == 'N' && msg[2] == 'D') {
+            cout<<"ccccc 1";
+            return false;
+        }
+
         cout << int(msg[0]) << " " << int(msg[1]) << endl;
 
         if (n == -1) {
@@ -118,7 +122,16 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             n = read(clientSocket2, &msg, sizeof(msg));
         }
 
+
+
          n = read(clientSocket2, &msg, sizeof(msg));
+
+        if (msg[0] == 'E' && msg[1] == 'N' && msg[2] == 'D') {
+            cout<<"ccccc 2";
+
+            return false;
+        }
+
 
         cout << int(msg[0]) << " " << int(msg[1]) << endl;
 
@@ -138,10 +151,8 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             return false;
         }
 
-
             x = true;
             n = read(clientSocket1, &msg, sizeof(msg));
-
 
     }
 
