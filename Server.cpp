@@ -51,13 +51,6 @@ void Server::start() {
         cout<<"client connected"<<endl;
 
         cout<<"waiting for another player to join"<<endl;
-
-        int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
-
-        if(clientSocket2 == -1) {
-            throw "ERROR ON ACCEPT";
-        }
-        cout<<"client connected"<<endl;
         char  X ='1';
         char O ='2';
 
@@ -65,6 +58,14 @@ void Server::start() {
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
         }
+
+        int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
+
+        if(clientSocket2 == -1) {
+            throw "ERROR ON ACCEPT";
+        }
+        cout<<"client connected"<<endl;
+
         n = write(clientSocket2 , &O , sizeof(O));
         if (n == -1) {
             cout<<"error writing to socket"<<endl;
@@ -137,7 +138,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
 
 
         if (msg[0] != 'N' && msg[1] != 'o') {
-            cout<<"llll";
+
             x = true;
             n = read(clientSocket1, &msg, sizeof(msg));
         } else {
