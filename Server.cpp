@@ -13,10 +13,10 @@
 #include <iostream>
 #include <unistd.h>
 #include "netinet/in.h"
-
-
+#define MSGSIZE 7
 using  namespace std;
 #define MAX_CONNECTED_CLIENTS 2
+
 
 Server::Server(int port): port(port),serverSocket(0) {
 }
@@ -95,7 +95,7 @@ void Server::stop() {
 
 
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
-    char msg[7];
+    char msg[MSGSIZE];
     bool x = false;
 
 
