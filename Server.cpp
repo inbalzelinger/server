@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <iostream>
 #include <unistd.h>
+#include <csignal>
 #include "netinet/in.h"
 
 
@@ -21,7 +22,6 @@ using  namespace std;
 Server::Server(int port): port(port),serverSocket(0) {
 }
 void Server::start() {
-
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         throw "ERROR OPENING SOCKET";
@@ -80,6 +80,7 @@ void Server::start() {
 
         p1 = handleClient(clientSocket1, clientSocket2);
 
+
         close(clientSocket1);
         close(clientSocket2);
 
@@ -97,19 +98,27 @@ void Server::stop() {
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
     char msg[7];
     bool x = false;
+	bool client1 = true;
+	bool client2 = true;
 
+	signal(SIGPIPE , SIG_IGN);
 
-	while (true) {
+	while (client1 && client2) {
+
 
 		int n = read(clientSocket1, &msg, sizeof(msg));
+		if (n == 0) {
+			cout << "client disconnected" << endl;
+			client1 = false;
+			break;
+			return false;
+		}
         if (n == -1) {
             cout << "Error reading x" << endl;
             return false;
         }
-        if (n == 0) {
-            cout << "client disconnected" << endl;
-            return false;
-        }
+
+
         n = write(clientSocket2, &msg, sizeof(msg));
 
         if (n == -1) {
@@ -122,16 +131,22 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
         }
 
          n = read(clientSocket2, &msg, sizeof(msg));
-
+		if (n == 0) {
+			cout << "client disconnected" << endl;
+			client2 = false;
+			break;
+			return false;
+		}
         if (n == -1) {
             cout << "Error reading x" << endl;
             return false;
         }
-        if (n == 0) {
-            cout << "client disconnected" << endl;
-            return false;
-        }
-        n = write(clientSocket1, &msg, sizeof(msg));
+
+
+
+
+
+		n = write(clientSocket1, &msg, sizeof(msg));
 
         if (n == -1) {
             cout << "Error writing y" << endl;
@@ -152,22 +167,8 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
 
 
 
-void Server::sendMove(int clientSocket) {
-    char x[2] = {'1' , '2' };
-    int n = write(clientSocket , &x , sizeof(x));
-    if (n == -1) {
-        cout << "Error in sendmove" << endl;
-        return;
-    }
-
-}
 
 
-
-
-int Server::getSocket() {
-    return this->serverSocket;
-}
 
 
 

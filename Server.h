@@ -14,8 +14,6 @@ public:
 
 
     bool handleClient(int clientSocket1, int clientSocket2);
-    int getSocket();
-    void sendMove(int clientSocket);
 
 private:
     int port;
