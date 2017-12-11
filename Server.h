@@ -12,10 +12,14 @@ public:
     void start();
     void  stop();
 
-
+/**
+ * read massage from client 1 and write it to client 2
+ * @param clientSocket1
+ * @param clientSocket2
+ * @return true if game should continue. else-return false.
+ */
     bool handleClient(int clientSocket1, int clientSocket2);
-    int getSocket();
-    void sendMove(int clientSocket);
+
 
 private:
     int port;

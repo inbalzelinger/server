@@ -152,22 +152,7 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
 
 
 
-void Server::sendMove(int clientSocket) {
-    char x[2] = {'1' , '2' };
-    int n = write(clientSocket , &x , sizeof(x));
-    if (n == -1) {
-        cout << "Error in sendmove" << endl;
-        return;
-    }
 
-}
-
-
-
-
-int Server::getSocket() {
-    return this->serverSocket;
-}
 
 
 
