@@ -61,6 +61,10 @@ void Server::start() {
         if(clientSocket2 == -1) {
             throw "ERROR ON ACCEPT";
         }
+
+		//create tread after the 2ed client had connect
+
+
         //send 2 to second client
         cout<<"client connected"<<endl;
         n = write(clientSocket2 , &O , sizeof(X));
