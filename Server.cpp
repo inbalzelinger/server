@@ -15,7 +15,7 @@
 #include "netinet/in.h"
 #define MSGSIZE 7
 using  namespace std;
-#define MAX_CONNECTED_CLIENTS 2
+#define MAX_CONNECTED_CLIENTS 10
 
 
 Server::Server(int port): port(port),serverSocket(0) {
