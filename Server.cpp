@@ -1,9 +1,3 @@
-//
-// Created by inbal on 05/12/17.
-//
-//
-// Created by hadar on 05/12/17.
-//
 
 #include "Server.h"
 #include <sys/socket.h>
@@ -12,16 +6,20 @@
 #include <algorithm>
 #include <iostream>
 #include <unistd.h>
+
+
+
 #include "netinet/in.h"
 #define MSGSIZE 7
 using  namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
 
-Server::Server(int port): port(port),serverSocket(0) {
-}
-void Server::start() {
+Server::Server(int port): port(port),serverSocket(0) {}
 
+
+
+void Server::start() {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         throw "ERROR OPENING SOCKET";
@@ -31,13 +29,16 @@ void Server::start() {
     serverAddress.sin_family=AF_INET;
     serverAddress.sin_addr.s_addr=INADDR_ANY;
     serverAddress.sin_port=htons(port);
+
     if (bind(serverSocket,(struct sockaddr*)&serverAddress, sizeof(serverAddress))==-1) {
         throw "ERROR ON BINDING";
     }
 
     listen(serverSocket,MAX_CONNECTED_CLIENTS);
 
+
     struct  sockaddr_in clientAddress;
+
     socklen_t  clientAddressLen = sizeof((struct sockaddr*)&clientAddress);
     while (true){
 
@@ -86,7 +87,6 @@ void Server::start() {
 
         close(clientSocket1);
         close(clientSocket2);
-
     }
 }
 
