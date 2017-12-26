@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "Server.h"
+#include "ServerReversiLogic.h"
 
 int main() {
     string port;
@@ -15,7 +16,12 @@ int main() {
     getline(inFile, port);
     inFile.close();
 
+
+	ServerReversiLogic logic;
+
+
     Server s(atoi(port.c_str()));
+
 
     try {
         s.start();

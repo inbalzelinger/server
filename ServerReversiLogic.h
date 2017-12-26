@@ -7,6 +7,8 @@
 
 
 #include "TwoClientsGame.h"
+#include "CommandManager.h"
+
 #include <vector>
 
 #include <iostream>
@@ -16,6 +18,7 @@ using  namespace std;
 class ServerReversiLogic {
 private:
 	vector<TwoClientsGame> gamesList;
+	CommandManager commandMannager;
 
 };
 
