@@ -5,10 +5,12 @@
 #ifndef SERVER_SERVER_H
 #define SERVER_SERVER_H
 
+#include "ServerReversiLogic.h"
+
 class Server {
 
 public:
-    Server(int port);
+    Server(int port , ServerReversiLogic logic);
     void start();
     void  stop();
 
@@ -24,7 +26,7 @@ public:
 private:
     int port;
     int serverSocket;
-
+    ServerReversiLogic logic
 
 
 

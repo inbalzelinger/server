@@ -3,3 +3,8 @@
 //
 
 #include "ServerReversiLogic.h"
+
+ServerReversiLogic::ServerReversiLogic() {
+	CommandManager commandManager;
+	this->commandMannager = commandManager;
+}

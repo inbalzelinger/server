@@ -19,7 +19,8 @@ class ServerReversiLogic {
 private:
 	vector<TwoClientsGame> gamesList;
 	CommandManager commandMannager;
-
+public:
+	ServerReversiLogic();
 };
 
 

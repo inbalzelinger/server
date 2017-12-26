@@ -19,8 +19,7 @@ int main() {
 
 	ServerReversiLogic logic;
 
-
-    Server s(atoi(port.c_str()));
+    Server s(atoi(port.c_str()) , logic);
 
 
     try {

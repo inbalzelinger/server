@@ -15,7 +15,7 @@ using  namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
 
-Server::Server(int port): port(port),serverSocket(0) {}
+Server::Server(int port , ServerReversiLogic logic): port(port) , logic(logic),serverSocket(0) {}
 
 
 
@@ -99,8 +99,12 @@ void Server::stop() {
 
 
 bool Server::handleClient(int clientSocket1,int clientSocket2) {
+
     char msg[MSGSIZE];
     bool x = false;
+
+
+
 
 
 	while (true) {
