@@ -15,7 +15,7 @@
 #include "netinet/in.h"
 #define MSGSIZE 7
 using  namespace std;
-#define MAX_CONNECTED_CLIENTS 2
+#define MAX_CONNECTED_CLIENTS 10
 
 
 Server::Server(int port): port(port),serverSocket(0) {
@@ -38,7 +38,7 @@ void Server::start() {
     listen(serverSocket,MAX_CONNECTED_CLIENTS);
 
     struct  sockaddr_in clientAddress;
-    socklen_t  clientAddressLen;
+    socklen_t  clientAddressLen = sizeof((struct sockaddr*)&clientAddress);
     while (true){
 
         cout<<"waiting for clients connections.."<<endl;
@@ -61,6 +61,10 @@ void Server::start() {
         if(clientSocket2 == -1) {
             throw "ERROR ON ACCEPT";
         }
+
+		//create tread after the 2ed client had connect
+
+
         //send 2 to second client
         cout<<"client connected"<<endl;
         n = write(clientSocket2 , &O , sizeof(X));
