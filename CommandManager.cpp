@@ -10,15 +10,10 @@
 #include "Join.h"
 
 CommandManager::CommandManager() {
-
 	commandsMap["start"] = new StartGame("kkk");
-
 	commandsMap["listGames"] = new ListGames();
-
 	commandsMap["join"] = new Join;
-
 	commandsMap["play"] = new Play;
-
 	commandsMap["close"] = new Close;
 
 }
