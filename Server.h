@@ -5,12 +5,13 @@
 #ifndef SERVER_SERVER_H
 #define SERVER_SERVER_H
 
-#include "ServerReversiLogic.h"
+#include "GameManeger.h"
+#include "CommandManager.h"
 
 class Server {
 
 public:
-    Server(int port , ServerReversiLogic logic);
+    Server(int port);
     void start();
     void  stop();
 
@@ -26,7 +27,8 @@ public:
 private:
     int port;
     int serverSocket;
-    ServerReversiLogic logic
+    CommandManager* commandMannager;
+
 
 
 

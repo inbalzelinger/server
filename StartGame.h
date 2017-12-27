@@ -6,16 +6,19 @@
 #define SERVER_STARTGAME_H
 
 #include "Command.h"
+#include "GameManeger.h"
 
 
 class StartGame: public Command{
 private:
 	string name;
+	GameManeger *gameManeger;
 
 public:
-	StartGame(string gameName);
+	StartGame(GameManeger *gameManeger);
 	virtual void execute(vector<string> args);
-	virtual ~Command(){}
+	void* addNewGame(void* game);
+
 };
 
 

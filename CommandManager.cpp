@@ -10,11 +10,12 @@
 #include "Join.h"
 
 CommandManager::CommandManager() {
-	commandsMap["start"] = new StartGame("kkk");
-	commandsMap["listGames"] = new ListGames();
-	commandsMap["join"] = new Join;
-	commandsMap["play"] = new Play;
-	commandsMap["close"] = new Close;
+    this->gameManeger = new GameManeger();
+	commandsMap["start"] = new StartGame(this->gameManeger);
+	//commandsMap["listGames"] = new ListGames();
+//	commandsMap["join"] = new Join;
+//	commandsMap["play"] = new Play;
+//	commandsMap["close"] = new Close;
 
 }
 
@@ -34,4 +35,5 @@ CommandManager::~CommandManager() {
     for(it=commandsMap.begin();it!=commandsMap.end();it++){
         delete it->second;
     }
+    delete gameManeger;
 }

@@ -6,16 +6,17 @@
 #include <algorithm>
 #include <iostream>
 #include <unistd.h>
+#include <sstream>
 
 
-
-#include "netinet/in.h"
 #define MSGSIZE 7
 using  namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
 
-Server::Server(int port , ServerReversiLogic logic): port(port) , logic(logic),serverSocket(0) {}
+Server::Server(int port): port(port),serverSocket(0) {
+    commandMannager = new CommandManager;
+}
 
 
 
@@ -106,7 +107,6 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
 
 
 
-
 	while (true) {
 
 		int n = read(clientSocket1, &msg, sizeof(msg));
@@ -118,6 +118,41 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
             cout << "client disconnected" << endl;
             return false;
         }
+        istringstream str(msg);
+        string commandName;
+        string tmp;
+
+
+        stringstream ss;
+        ss<<clientSocket1;
+        string socket = ss.str();
+
+
+        vector<string> commandArgs;
+
+        commandArgs.push_back(socket);
+
+        getline(str , commandName ,' ');
+
+        while (getline(str , tmp , ' ')) {
+            commandArgs.push_back(tmp);
+        }
+        commandMannager->executeCommand(commandName , commandArgs);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         n = write(clientSocket2, &msg, sizeof(msg));
 
         if (n == -1) {

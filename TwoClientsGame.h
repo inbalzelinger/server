@@ -21,7 +21,7 @@ private:
 
 public:
 	TwoClientsGame(string name , int clientOne , int clientTwo);
-
+	string getName();
 };
 
 

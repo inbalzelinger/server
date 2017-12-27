@@ -7,3 +7,6 @@
 TwoClientsGame::TwoClientsGame(string name , int clientOne , int clientTwo):gameName(name),
 																			playerOne(clientOne) ,
 																			playerTwo(clientTwo)  {}
+string TwoClientsGame::getName() {
+	return this->gameName;
+}

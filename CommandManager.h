@@ -8,6 +8,7 @@
 
 #include <map>
 #include "Command.h"
+#include "GameManeger.h"
 
 class CommandManager {
 public:
@@ -16,6 +17,7 @@ public:
     void executeCommand(string command,vector<string> args);
 
 private:
+	GameManeger* gameManeger;
     map<string,Command*> commandsMap;
 
 };

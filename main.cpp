@@ -5,21 +5,21 @@
 using namespace std;
 
 #include "Server.h"
-#include "ServerReversiLogic.h"
+#include "GameManeger.h"
 
 int main() {
     string port;
 
     ifstream inFile;
     /////take of the ../
+
     inFile.open("../settings.txt");
     getline(inFile, port);
     inFile.close();
 
 
-	ServerReversiLogic logic;
-
-    Server s(atoi(port.c_str()) , logic);
+    GameManeger *gameManeger = new GameManeger;
+    Server s(atoi(port.c_str()));
 
 
     try {
