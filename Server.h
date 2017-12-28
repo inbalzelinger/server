@@ -13,6 +13,8 @@ class Server {
 public:
     Server(int port);
     void start();
+
+
     void  stop();
 
 /**
@@ -21,7 +23,7 @@ public:
  * @param clientSocket2
  * @return true if game should continue. else-return false.
  */
-    bool handleClient(int clientSocket1, int clientSocket2);
+    bool handleClient(int clientSocket1);
 
 
 private:

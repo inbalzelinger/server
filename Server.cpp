@@ -7,6 +7,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
+void* execute(void* clientSocket);
 
 
 #define MSGSIZE 7
@@ -36,8 +37,6 @@ void Server::start() {
     }
 
     listen(serverSocket,MAX_CONNECTED_CLIENTS);
-
-
     struct  sockaddr_in clientAddress;
 
     socklen_t  clientAddressLen = sizeof((struct sockaddr*)&clientAddress);
@@ -49,45 +48,51 @@ void Server::start() {
             throw "ERROR ON ACCEPT";
         }
         cout<<"client connected"<<endl;
-
-        char  X ='1';
-        char O ='2';
-        //send 1 to first client
-        int n = write(clientSocket1 , &X , sizeof(X));
-        if (n == -1) {
-        cout<<"error writing to socket"<<endl;
-        }
-        cout<<"waiting for another player to join"<<endl;
-
-        int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
-        if(clientSocket2 == -1) {
-            throw "ERROR ON ACCEPT";
-        }
-
-		//create tread after the 2ed client had connect
+        int p1;
+        p1 = handleClient(clientSocket1);
 
 
-        //send 2 to second client
-        cout<<"client connected"<<endl;
-        n = write(clientSocket2 , &O , sizeof(X));
-        if (n == -1) {
-            cout<<"error writing to socket"<<endl;
-        }
-        //send 1 or 2 again to both clients
-		 n = write(clientSocket1 , &X , sizeof(X));
-        if (n == -1) {
-            cout<<"error writing to socket"<<endl;
-        }
-        n = write(clientSocket2 , &O , sizeof(O));
-        if (n == -1) {
-            cout<<"error writing to socket"<<endl;
-        }
-        bool p1 = true;
 
-        p1 = handleClient(clientSocket1, clientSocket2);
+
+
+
+//
+//        char  X ='1';
+//        char O ='2';
+//        //send 1 to first client
+//        int n = write(clientSocket1 , &X , sizeof(X));
+//        if (n == -1) {
+//        cout<<"error writing to socket"<<endl;
+//        }
+//        cout<<"waiting for another player to join"<<endl;
+//
+//        int clientSocket2 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
+//        if(clientSocket2 == -1) {
+//            throw "ERROR ON ACCEPT";
+//        }
+//
+//		//create tread after the 2ed client had connect
+//
+//
+//        //send 2 to second client
+//        cout<<"client connected"<<endl;
+//        n = write(clientSocket2 , &O , sizeof(X));
+//        if (n == -1) {
+//            cout<<"error writing to socket"<<endl;
+//        }
+//        //send 1 or 2 again to both clients
+//		 n = write(clientSocket1 , &X , sizeof(X));
+//        if (n == -1) {
+//            cout<<"error writing to socket"<<endl;
+//        }
+//        n = write(clientSocket2 , &O , sizeof(O));
+//        if (n == -1) {
+//            cout<<"error writing to socket"<<endl;
+//        }
+//        bool p1 = true;
 
         close(clientSocket1);
-        close(clientSocket2);
+      //  close(clientSocket2);
     }
 }
 
@@ -99,17 +104,58 @@ void Server::stop() {
 
 
 
-bool Server::handleClient(int clientSocket1,int clientSocket2) {
+bool Server::handleClient(int clientSocket1) {
+    pthread_t tread;
+    pthread_create(&tread, NULL, execute, (void *) clientSocket1);
+}
 
+//	while (true) {
+
+//        n = write(clientSocket2, &msg, sizeof(msg));
+//
+//        if (n == -1) {
+//            cout << "Error writing y" << endl;
+//            return false;
+//        }
+//
+//        if (x == true) {
+//            n = read(clientSocket2, &msg, sizeof(msg));
+//        }
+//
+//         n = read(clientSocket2, &msg, sizeof(msg));
+//
+//        if (n == -1) {
+//            cout << "Error reading x" << endl;
+//            return false;
+//        }
+//        if (n == 0) {
+//            cout << "client disconnected" << endl;
+//            return false;
+//        }
+//        n = write(clientSocket1, &msg, sizeof(msg));
+//
+//        if (n == -1) {
+//            cout << "Error writing y" << endl;
+//            return false;
+//        }
+//
+//
+//        if (msg[0] != 'N' && msg[1] != 'o') {
+//
+//            x = true;
+//            n = read(clientSocket1, &msg, sizeof(msg));
+//        } else {
+//            x = false;
+//        }
+//    }
+
+
+
+
+void* execute(void* clientSocket) {
     char msg[MSGSIZE];
     bool x = false;
-
-
-
-
-	while (true) {
-
-		int n = read(clientSocket1, &msg, sizeof(msg));
+    int n = read(*(int*)clientSocket, &msg, sizeof(msg));
         if (n == -1) {
             cout << "Error reading x" << endl;
             return false;
@@ -121,12 +167,9 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
         istringstream str(msg);
         string commandName;
         string tmp;
-
-
         stringstream ss;
-        ss<<clientSocket1;
+        ss<<clientSocket;
         string socket = ss.str();
-
 
         vector<string> commandArgs;
 
@@ -137,64 +180,8 @@ bool Server::handleClient(int clientSocket1,int clientSocket2) {
         while (getline(str , tmp , ' ')) {
             commandArgs.push_back(tmp);
         }
-        commandMannager->executeCommand(commandName , commandArgs);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        n = write(clientSocket2, &msg, sizeof(msg));
-
-        if (n == -1) {
-            cout << "Error writing y" << endl;
-            return false;
-        }
-
-        if (x == true) {
-            n = read(clientSocket2, &msg, sizeof(msg));
-        }
-
-         n = read(clientSocket2, &msg, sizeof(msg));
-
-        if (n == -1) {
-            cout << "Error reading x" << endl;
-            return false;
-        }
-        if (n == 0) {
-            cout << "client disconnected" << endl;
-            return false;
-        }
-        n = write(clientSocket1, &msg, sizeof(msg));
-
-        if (n == -1) {
-            cout << "Error writing y" << endl;
-            return false;
-        }
-
-
-        if (msg[0] != 'N' && msg[1] != 'o') {
-
-            x = true;
-            n = read(clientSocket1, &msg, sizeof(msg));
-        } else {
-            x = false;
-        }
-    }
+        //commandMannager->executeCommand(commandName , commandArgs);
 }
-
-
-
-
 
 
 

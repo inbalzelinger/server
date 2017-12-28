@@ -31,16 +31,9 @@ void StartGame::execute(vector<string> args) {
 			cout<<"error writing to socket"<<endl;
 		}
 	}
-
-	pthread_t tread;
-
-	n = pthread_create(&tread , NULL , addNewGame, (void*)twoClientsGame);
-	if(n) {
-		cout<<"Error unable to create thread, "<< n <<endl;
-		exit(-1);
+	addNewGame(twoClientsGame);
 	}
-	pthread_exit(NULL);
-}
+
 
 
 
