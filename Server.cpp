@@ -7,7 +7,11 @@
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
-void* execute(void* clientSocket);
+
+
+void* handleClient(void *clientSocket);
+void* acceptClients(void* serverSocket);
+
 
 
 #define MSGSIZE 7
@@ -31,32 +35,15 @@ void Server::start() {
     serverAddress.sin_family=AF_INET;
     serverAddress.sin_addr.s_addr=INADDR_ANY;
     serverAddress.sin_port=htons(port);
-
     if (bind(serverSocket,(struct sockaddr*)&serverAddress, sizeof(serverAddress))==-1) {
         throw "ERROR ON BINDING";
     }
 
     listen(serverSocket,MAX_CONNECTED_CLIENTS);
-    struct  sockaddr_in clientAddress;
-
-    socklen_t  clientAddressLen = sizeof((struct sockaddr*)&clientAddress);
-    while (true){
-
-        cout<<"waiting for clients connections.."<<endl;
-        int clientSocket1 = accept(serverSocket,(struct sockaddr*)&clientAddress,&clientAddressLen);
-        if(clientSocket1 == -1) {
-            throw "ERROR ON ACCEPT";
-        }
-        cout<<"client connected"<<endl;
-        int p1;
-        p1 = handleClient(clientSocket1);
+		pthread_t tread;
+		pthread_create(&tread, NULL, acceptClients, (void *)serverSocket);
 
 
-
-
-
-
-//
 //        char  X ='1';
 //        char O ='2';
 //        //send 1 to first client
@@ -91,10 +78,10 @@ void Server::start() {
 //        }
 //        bool p1 = true;
 
-        close(clientSocket1);
+        //close(clientSocket1);
       //  close(clientSocket2);
-    }
 }
+
 
 
 
@@ -104,10 +91,6 @@ void Server::stop() {
 
 
 
-bool Server::handleClient(int clientSocket1) {
-    pthread_t tread;
-    pthread_create(&tread, NULL, execute, (void *) clientSocket1);
-}
 
 //	while (true) {
 
@@ -150,9 +133,29 @@ bool Server::handleClient(int clientSocket1) {
 //    }
 
 
+void* acceptClients(void* serverSocket) {
+	while (true) {
+		cout << "waiting for clients connections.." << endl;
+		struct sockaddr_in clientAddress;
+		socklen_t clientAddressLen = sizeof((struct sockaddr *) &clientAddress);
+		int *intptrToSocket = (int *) serverSocket;
+		int clientSocket1 = accept(*intptrToSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
+		if (clientSocket1 == -1) {
+			throw "ERROR ON ACCEPT";
+		}
+		cout << "client connected" << endl;
+		int p1;
+		pthread_t tread;
+		pthread_create(&tread, NULL, handleClient, (void *) clientSocket1);
+		close(clientSocket1);
+	}
+
+}
 
 
-void* execute(void* clientSocket) {
+
+
+void* handleClient(void *clientSocket) {
     char msg[MSGSIZE];
     bool x = false;
     int n = read(*(int*)clientSocket, &msg, sizeof(msg));
@@ -170,17 +173,15 @@ void* execute(void* clientSocket) {
         stringstream ss;
         ss<<clientSocket;
         string socket = ss.str();
-
         vector<string> commandArgs;
-
         commandArgs.push_back(socket);
-
         getline(str , commandName ,' ');
-
         while (getline(str , tmp , ' ')) {
             commandArgs.push_back(tmp);
         }
         //commandMannager->executeCommand(commandName , commandArgs);
+
+
 }
 
 
