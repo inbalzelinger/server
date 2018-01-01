@@ -19,7 +19,7 @@ using  namespace std;
 
 
 Server::Server(int port , CommandManager &comandMng): port(port),serverSocket(0), comandMng(comandMng)
-, serverThreadId(0){}
+, serverThreadId(0) {}
 
 
 struct SoccketAndMeneger {
@@ -44,23 +44,18 @@ void Server::start() {
         throw "ERROR ON BINDING";
     }
     listen(serverSocket,MAX_CONNECTED_CLIENTS);
-		pthread_t tread;
 	struct SoccketAndMeneger data;
 	data.socket = serverSocket;
 	data.cmd = commandMannager;
-
-	pthread_create(&tread, NULL, acceptClients, (void*)&data);
-
-
-	pthread_join(tread , NULL);
-
+	pthread_create(&serverThreadId, NULL, acceptClients, (void*)&data);
+	pthread_join(serverThreadId , NULL);
 	pthread_exit(NULL);
 
 
 
 
 
-    // char  X ='1';
+    //    char  X ='1';
 //        char O ='2';
 //        //send 1 to first client
 //        int n = write(clientSocket1 , &X , sizeof(X));

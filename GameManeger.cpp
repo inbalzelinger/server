@@ -11,8 +11,8 @@ GameManeger::GameManeger() {
 void GameManeger::addGame(TwoClientsGame game) {
 	if (!this->inList(game.getName())) {
 		gamesList.push_back(game);
-
 	}
+
 }
 
 

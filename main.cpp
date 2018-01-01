@@ -18,13 +18,17 @@ int main() {
     inFile.close();
 
     CommandManager commandManager;
-
     GameManeger *gameManeger = new GameManeger;
     Server s(atoi(port.c_str()) , commandManager);
 
-
     try {
         s.start();
+        cout<<"Ente exit to stop the server"<<endl;
+        string str;
+        cin>>str;
+        if (str == "exit") {
+            s.stop();
+        }
     } catch (const char* msg) {
         cout<<msg;
     }

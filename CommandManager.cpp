@@ -12,7 +12,7 @@
 CommandManager::CommandManager() {
     this->gameManeger = new GameManeger();
 	commandsMap["start"] = new StartGame(this->gameManeger);
-	//commandsMap["listGames"] = new ListGames();
+    //commandsMap["listGames"] = new ListGames();
 //	commandsMap["join"] = new Join;
 //	commandsMap["play"] = new Play;
 //	commandsMap["close"] = new Close;
