@@ -14,6 +14,8 @@
 void Play::execute(vector<string> args) {
 	char msg[MSGSIZE];
 
+
+
 	//the x and y is in args[2]
 
 	istringstream str(args[2]);
