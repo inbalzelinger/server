@@ -16,7 +16,7 @@ private:
 
 public:
 	StartGame(GameManeger *gameManeger);
-	virtual void execute(vector<string> args);
+	void execute(vector<string> args);
 	void* addNewGame(void* game);
 
 };

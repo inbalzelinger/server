@@ -17,7 +17,7 @@ public:
     void executeCommand(string command,vector<string> args);
 
 private:
-	GameManeger* gameManeger;
+	GameManeger* gameManager;
     map<string,Command*> commandsMap;
 
 };

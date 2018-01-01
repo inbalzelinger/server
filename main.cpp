@@ -12,7 +12,6 @@ int main() {
 
     ifstream inFile;
     /////take of the ../
-
     inFile.open("../settings.txt");
     getline(inFile, port);
     inFile.close();

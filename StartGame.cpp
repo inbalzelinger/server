@@ -25,7 +25,7 @@ void StartGame::execute(vector<string> args) {
 	int n;
 	TwoClientsGame *twoClientsGame = new TwoClientsGame(args[1],atoi(args[0].c_str()), 0);
 	if(gameManeger->inList(args[1])) {
-		int x = -1;
+		int x = 1;
 		n = write(atoi(args[0].c_str()) , &x , sizeof(x));
 		if (n == -1) {
 			cout<<"error writing to socket"<<endl;

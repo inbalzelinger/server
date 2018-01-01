@@ -10,10 +10,10 @@
 #include "Join.h"
 
 CommandManager::CommandManager() {
-    this->gameManeger = new GameManeger();
-	commandsMap["start"] = new StartGame(this->gameManeger);
+    this->gameManager = new GameManeger();
+	commandsMap["start"] = new StartGame(this->gameManager);
     //commandsMap["listGames"] = new ListGames();
-//	commandsMap["join"] = new Join;
+	commandsMap["join"] = new Join(this->gameManager);
 //	commandsMap["play"] = new Play;
 //	commandsMap["close"] = new Close;
 

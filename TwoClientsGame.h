@@ -22,8 +22,11 @@ private:
 public:
 	TwoClientsGame(string name , int clientOne , int clientTwo);
 	string getName();
-	int getPlayerOne();
-	int getPlayerTwo();
+	void setPlayerOne(int clientOne);
+	void setPlayertwo(int clientTwo);
+	int getClientOne();
+	int getClientTwo();
+
 };
 
 

@@ -24,6 +24,7 @@ public:
 	bool inList(string game);
 	void addGame(TwoClientsGame game);
 	void removeGame(string name);
+	TwoClientsGame* getGame(string name);
 };
 
 
