@@ -15,11 +15,9 @@ class Play: public Command{
 
 
 public:
-	Play(TwoClientsGame &twoClientsGame);
 	virtual void execute(vector<string> args);
 
 private:
-	TwoClientsGame currentPlay;
 
 };
 
