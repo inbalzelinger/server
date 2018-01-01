@@ -33,3 +33,12 @@ void GameManeger::removeGame(string name) {
 		}
 	}
 }
+
+TwoClientsGame *GameManeger::getGame(string name) {
+    for (int i = 0; i < this->gamesList.size(); i++) {
+        if (name.compare(gamesList[i].getName()) == 0) {
+            TwoClientsGame *game = &gamesList[i];
+            return game;
+        }
+    }
+}

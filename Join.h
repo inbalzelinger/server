@@ -7,8 +7,15 @@
 
 
 #include "Command.h"
+#include "GameManeger.h"
 
 class Join: public Command {
+private:
+    GameManeger *gameManeger;
+    int joiningClientSocket;
+public:
+    Join(GameManeger *gameManager1, int joiningClientSocket);
+    virtual void execute(vector<string> args);
 
 };
 

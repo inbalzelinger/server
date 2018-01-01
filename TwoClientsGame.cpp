@@ -10,10 +10,15 @@ TwoClientsGame::TwoClientsGame(string name , int clientOne , int clientTwo):game
 string TwoClientsGame::getName() {
 	return this->gameName;
 }
-
-int TwoClientsGame::getPlayerOne() {
+int TwoClientsGame::getClientOne() {
 	return this->playerOne;
 }
-int TwoClientsGame::getPlayerTwo() {
+int TwoClientsGame::getClientTwo() {
 	return this->playerTwo;
+}
+void TwoClientsGame::setPlayerOne(int clientOne) {
+	this->playerOne=clientOne;
+}
+void TwoClientsGame::setPlayertwo(int clientTwo) {
+	this->playerTwo=clientTwo;
 }
