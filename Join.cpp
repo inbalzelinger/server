@@ -6,17 +6,17 @@
 #include <sys/socket.h>
 #include "Join.h"
 
-Join::Join(GameManeger *gameManager1,int joiningClientSocket) {
+Join::Join(GameManeger *gameManager1) {
     this->gameManeger=gameManager1;
-    this->joiningClientSocket=joiningClientSocket;
+    //this->joiningClientSocket=joiningClientSocket;
 }
 
- void Join::execute(vector<string> args) {
+ void Join::execute(vector<string> args, int joiningClientSocket) {
      TwoClientsGame *gameToJoin;
      if (gameManeger->inList(args[1])) {
          gameToJoin = gameManeger->getGame(args[1]);
      }
-     gameToJoin->setPlayertwo(this->joiningClientSocket);
+     gameToJoin->setPlayertwo(joiningClientSocket);
     int clientSocket1=gameToJoin->getClientOne();
      int clientSocket2=gameToJoin->getClientTwo();
      char  X ='1';

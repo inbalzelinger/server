@@ -12,10 +12,9 @@
 class Join: public Command {
 private:
     GameManeger *gameManeger;
-    int joiningClientSocket;
 public:
-    Join(GameManeger *gameManager1, int joiningClientSocket);
-    virtual void execute(vector<string> args);
+    Join(GameManeger *gameManager1);
+    void execute(vector<string> args,int joiningClientSocket);
 
 };
 

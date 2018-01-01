@@ -27,31 +27,31 @@ void Play::execute(vector<string> args) {
 	//	}
 
 
-		int n = write(this->currentPlay.getPlayerTwo(), &msg, sizeof(msg));
-		if (n == -1) {
-			cout << "Error writing y" << endl;
-			return;
-		}
+	int n = write(this->currentPlay.getClientTwo(), &msg, sizeof(msg));
+	if (n == -1) {
+		cout << "Error writing y" << endl;
+		return;
+	}
 
-		if (x == true) {
-			n = read(this->currentPlay.getPlayerTwo(), &msg, sizeof(msg));
-		}
-		n = read(this->currentPlay.getPlayerTwo(), &msg, sizeof(msg));
-		if (n == -1) {
-			cout << "Error reading x" << endl;
-			return;
-		}
-		if (n == 0) {
-			cout << "client disconnected" << endl;
-			return;
-		}
-		n = write(this->currentPlay.getPlayerOne(), &msg, sizeof(msg));
+	if (x == true) {
+		n = read(this->currentPlay.getClientTwo(), &msg, sizeof(msg));
+	}
+	n = read(this->currentPlay.getClientTwo(), &msg, sizeof(msg));
+	if (n == -1) {
+		cout << "Error reading x" << endl;
+		return;
+	}
+	if (n == 0) {
+		cout << "client disconnected" << endl;
+		return;
+	}
+	n = write(this->currentPlay.getClientOne(), &msg, sizeof(msg));
 
-		if (n == -1) {
-			cout << "Error writing y" << endl;
-			return;
-		}
-
+	if (n == -1) {
+		cout << "Error writing y" << endl;
+		return;
+	}
+}
 //		if (msg[0] != 'N' && msg[1] != 'o') {
 
 //			x = true;
@@ -61,7 +61,7 @@ void Play::execute(vector<string> args) {
 //		}
 //	}
 
-}
+
 
 
 
@@ -109,7 +109,7 @@ void Play::execute(vector<string> args) {
 
 
 
-}
+
 
 
 //
