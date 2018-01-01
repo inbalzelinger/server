@@ -17,9 +17,10 @@ int main() {
     getline(inFile, port);
     inFile.close();
 
+    CommandManager commandManager;
 
     GameManeger *gameManeger = new GameManeger;
-    Server s(atoi(port.c_str()));
+    Server s(atoi(port.c_str()) , commandManager);
 
 
     try {

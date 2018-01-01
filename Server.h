@@ -11,10 +11,9 @@
 class Server {
 
 public:
-    Server(int port);
+    Server(int port ,  CommandManager &commandManager);
     void start();
-
-
+    CommandManager comandMng;
     void  stop();
 
 /**
@@ -29,6 +28,7 @@ public:
 private:
     int port;
     int serverSocket;
+    pthread_t serverThreadId;
     CommandManager* commandMannager;
 
 
