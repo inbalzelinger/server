@@ -7,13 +7,19 @@
 
 
 #include "Command.h"
+#include "TwoClientsGame.h"
+#include <iostream>
+using namespace std;
 
 class Play: public Command{
 
 
 public:
-	Play();
+	Play(TwoClientsGame &twoClientsGame);
 	virtual void execute(vector<string> args);
+
+private:
+	TwoClientsGame currentPlay;
 
 };
 
