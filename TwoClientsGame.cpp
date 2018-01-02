@@ -6,7 +6,9 @@
 
 TwoClientsGame::TwoClientsGame(string name , int clientOne , int clientTwo):gameName(name),
 																			playerOne(clientOne) ,
-																			playerTwo(clientTwo)  {}
+																			playerTwo(clientTwo)  {
+	this->isAvailable= true;
+}
 string TwoClientsGame::getName() {
 	return this->gameName;
 }
@@ -18,7 +20,20 @@ int TwoClientsGame::getClientTwo() {
 }
 void TwoClientsGame::setPlayerOne(int clientOne) {
 	this->playerOne=clientOne;
+	if(this->playerTwo!=0||this->playerOne!=0){
+		this->isAvailable= false;
+	}
 }
-void TwoClientsGame::setPlayertwo(int clientTwo) {
+void TwoClientsGame::setPlayerTwo(int clientTwo) {
 	this->playerTwo=clientTwo;
+	if(this->playerTwo!=0||this->playerOne!=0){
+		this->isAvailable= false;
+	}
+}
+
+bool TwoClientsGame::getIsAvailable() {
+	return this->isAvailable;
+}
+void TwoClientsGame::setIsAvailable(bool status) {
+	this->isAvailable=status;
 }

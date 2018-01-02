@@ -13,7 +13,6 @@ class Server {
 public:
     Server(int port ,  CommandManager &commandManager);
     void start();
-    CommandManager comandMng;
     void  stop();
 
 /**

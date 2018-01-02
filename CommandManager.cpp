@@ -12,7 +12,7 @@
 CommandManager::CommandManager() {
     this->gameManager = new GameManeger();
 	commandsMap["start"] = new StartGame(this->gameManager);
-    //commandsMap["listGames"] = new ListGames();
+    commandsMap["listGames"] = new ListGames(this->gameManager);
 	commandsMap["join"] = new Join(this->gameManager);
 //	commandsMap["play"] = new Play;
 //	commandsMap["close"] = new Close;
@@ -22,6 +22,7 @@ CommandManager::CommandManager() {
 
 
 void CommandManager::executeCommand(string command, vector<string> args) {
+    cout<<command<<endl;
     Command* commandObj = commandsMap[command];
     commandObj->execute(args);
 }

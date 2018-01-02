@@ -25,6 +25,7 @@ public:
 	void addGame(TwoClientsGame game);
 	void removeGame(string name);
 	TwoClientsGame* getGame(string name);
+	vector<string>getAvailableGams();
 };
 
 

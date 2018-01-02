@@ -14,7 +14,7 @@ private:
     GameManeger *gameManeger;
 public:
     Join(GameManeger *gameManager1);
-    void execute(vector<string> args,int joiningClientSocket);
+    void execute(vector<string> args);
 
 };
 

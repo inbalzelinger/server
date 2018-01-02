@@ -3,21 +3,21 @@
 //
 
 #include <unistd.h>
-#include <sys/socket.h>
+#include <cstdlib>
 #include "Join.h"
 
 Join::Join(GameManeger *gameManager1) {
     this->gameManeger=gameManager1;
-    //this->joiningClientSocket=joiningClientSocket;
 }
 
- void Join::execute(vector<string> args, int joiningClientSocket) {
+ void Join::execute(vector<string> args) {
      TwoClientsGame *gameToJoin;
      if (gameManeger->inList(args[1])) {
          gameToJoin = gameManeger->getGame(args[1]);
      }
-     gameToJoin->setPlayertwo(joiningClientSocket);
-    int clientSocket1=gameToJoin->getClientOne();
+     int socket = atoi(args[0].c_str());
+     gameToJoin->setPlayerTwo(socket);
+     int clientSocket1=gameToJoin->getClientOne();
      int clientSocket2=gameToJoin->getClientTwo();
      char  X ='1';
      char O ='2';

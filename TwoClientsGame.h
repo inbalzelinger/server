@@ -18,14 +18,17 @@ private:
 	string gameName;
 	int playerOne;
 	int playerTwo;
+	bool isAvailable;
 
 public:
 	TwoClientsGame(string name , int clientOne , int clientTwo);
 	string getName();
 	void setPlayerOne(int clientOne);
-	void setPlayertwo(int clientTwo);
+	void setPlayerTwo(int clientTwo);
 	int getClientOne();
 	int getClientTwo();
+	void setIsAvailable(bool status);
+	bool getIsAvailable();
 
 };
 

@@ -6,9 +6,16 @@
 #define SERVER_LISTGAMES_H
 
 
+#include <cstdlib>
 #include "Command.h"
+#include "GameManeger.h"
 
 class ListGames: public Command {
+private:
+    GameManeger *gameManager;
+public:
+    ListGames(GameManeger *gameManager1);
+    void execute(vector<string> args);
 
 };
 

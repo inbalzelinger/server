@@ -15,7 +15,6 @@ void GameManeger::addGame(TwoClientsGame game) {
 
 }
 
-
 bool GameManeger::inList(string game) {
 	for (int i=0;i<gamesList.size();i++) {
 		if(gamesList[i].getName()== game) {
@@ -41,4 +40,14 @@ TwoClientsGame *GameManeger::getGame(string name) {
             return game;
         }
     }
+}
+
+vector<string> GameManeger::getAvailableGams() {
+	vector<string> availableGames;
+	for (int i = 0; i < this->gamesList.size(); i++) {
+		if (gamesList[i].getIsAvailable()) {
+			availableGames.push_back(gamesList[i].getName());
+		}
+	}
+	return availableGames;
 }
