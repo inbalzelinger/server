@@ -5,8 +5,6 @@
 #include "CommandManager.h"
 #include "ListGames.h"
 #include "StartGame.h"
-#include "Play.h"
-#include "Close.h"
 #include "Join.h"
 
 CommandManager::CommandManager() {

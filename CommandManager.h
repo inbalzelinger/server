@@ -12,12 +12,32 @@
 
 class CommandManager {
 public:
+
+	/**
+* finction name: CommandManager
+* construct command meneger..
+*/
     CommandManager();
+
+	/**
+* finction name: ~CommandManager
+* dstructor.
+*/
     ~CommandManager();
+
+	/**
+* finction name: executeCommand
+* create an object regarding the command
+	 * call to execute of the object its created.
+*@param command - the command
+*@param args - the args of the command (args[0] == client socket.
+*/
     void executeCommand(string command,vector<string> args);
 
 private:
+
 	GameManeger* gameManager;
+
     map<string,Command*> commandsMap;
 
 };

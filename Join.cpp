@@ -9,7 +9,7 @@
 void* playGame(void* gameToJoin);
 
 Join::Join(GameManeger *gameManager1) {
-    this->gameManeger=gameManager1;
+    this->gameManeger = gameManager1;
 }
 
  void Join::execute(vector<string> args) {
@@ -47,7 +47,6 @@ Join::Join(GameManeger *gameManager1) {
      if (n) {
          throw "Error creating client accept thread";
      }
-
 
    //close(clientSocket1);
    //close(clientSocket2);

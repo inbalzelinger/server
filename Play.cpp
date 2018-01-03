@@ -34,9 +34,7 @@ bool Play::playGame(TwoClientsGame &twoClientsGame1) {
 		if (x == true) {
 			n = read(clientSocket2, &msg, sizeof(msg));
 		}
-
 		n = read(clientSocket2, &msg, sizeof(msg));
-
 		if (n == -1) {
 			cout << "Error reading x" << endl;
 			return false;
@@ -46,13 +44,11 @@ bool Play::playGame(TwoClientsGame &twoClientsGame1) {
 			return false;
 		}
 		n = write(clientSocket1, &msg, sizeof(msg));
-
 		if (n == -1) {
 			cout << "Error writing y" << endl;
 			return false;
 		}
 		if (msg[0] != 'N' && msg[1] != 'o') {
-
 			x = true;
 			n = read(clientSocket1, &msg, sizeof(msg));
 		} else {

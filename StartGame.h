@@ -15,8 +15,28 @@ private:
 	GameManeger *gameManeger;
 
 public:
+
+	/**
+* function name: StartGame
+* constructor
+* @param gameManeger - holds the list of the games.
+*/
+
 	StartGame(GameManeger *gameManeger);
+
+	/**
+* function name: execute
+* treat the command join. -if the game exist so join it
+* @param args - hold clients socket and the name of the game to join to.
+*/
+
 	void execute(vector<string> args);
+
+	/**
+* finction name: addNewGame
+* tread of game between two clients.
+* @param game - the two clients game (the sockets of the clients and the game name.
+*/
 	void* addNewGame(void* game);
 
 };
