@@ -31,3 +31,8 @@ CommandManager::~CommandManager() {
     }
   //  delete gameManeger;
 }
+
+
+GameManeger* CommandManager::getGameManagar() {
+	return this->gameManager;
+}

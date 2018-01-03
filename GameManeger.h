@@ -66,6 +66,9 @@ public:
 */
 
 	vector<string>getAvailableGams();
+
+	void SendStopToEveryOne();
+
 };
 
 

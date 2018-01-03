@@ -64,6 +64,10 @@ void Server::start() {
 void Server::stop() {
 	pthread_cancel(serverThreadId);
 	pthread_join(serverThreadId , NULL);
+
+
+
+
     close(serverSocket);
 	cout<<"server Stoped"<<endl;
 }
@@ -88,6 +92,7 @@ void*acceptClients(void* serverSocket) {
 		clientData->cmd = serverData->cmd;
 		pthread_t tread;
         cout<<clientData->socket<<endl;
+
 		pthread_create(&tread, NULL, &handleClient, (void*)clientData);
 		threads.push_back(tread);
         for (int i = 0; i < threads.size(); i++) {

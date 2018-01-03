@@ -2,7 +2,11 @@
 // Created by inbal on 26/12/17.
 //
 
+#include <unistd.h>
+#include <cstring>
 #include "GameManeger.h"
+#define MSGSIZE 20
+
 
 GameManeger::GameManeger() {
 }
@@ -51,3 +55,28 @@ vector<string> GameManeger::getAvailableGams() {
 	}
 	return availableGames;
 }
+
+
+void GameManeger::SendStopToEveryOne(){
+	for (int i = 0; i < this->gamesList.size(); i++) {
+		int clientOne=gamesList[i].getClientOne();
+		int clientTwo=gamesList[i].getClientTwo();
+		char msg[MSGSIZE];
+			string exit = "exit";
+			strcpy(msg,exit.c_str());
+		int n = write(clientOne, &msg, sizeof(msg));
+		if (n == -1) {
+			cout << "Error writing y" << endl;
+			return;
+		}
+		n = write(clientTwo, &msg, sizeof(msg));
+		if (n == -1) {
+			cout << "Error writing y" << endl;
+			return;
+		}
+		close(clientOne);
+		close(clientTwo);
+
+	}
+}
+

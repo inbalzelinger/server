@@ -34,6 +34,10 @@ public:
 */
     void executeCommand(string command,vector<string> args);
 
+	GameManeger* getGameManagar();
+
+
+
 private:
 
 	GameManeger* gameManager;
