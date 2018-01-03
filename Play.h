@@ -11,13 +11,16 @@
 #include <iostream>
 using namespace std;
 
-class Play: public Command{
-
+class Play{
 
 public:
-	virtual void execute(vector<string> args);
+
+	bool playGame(TwoClientsGame &twoClientsGame);
+
 
 private:
+	TwoClientsGame *twoClientsGame;
+
 
 };
 

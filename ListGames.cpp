@@ -7,6 +7,7 @@
 #define MSGSIZE 100
 ListGames::ListGames(GameManeger *gameManager1):gameManager(gameManager1) {}
 void ListGames::execute(vector<string> args) {
+    cout<<"ffff"<<endl;
         int socket = atoi(args[0].c_str());
         vector<string>availableGames=this->gameManager->getAvailableGams();
         char message[MSGSIZE];

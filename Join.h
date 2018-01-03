@@ -8,6 +8,7 @@
 
 #include "Command.h"
 #include "GameManeger.h"
+#include "Play.h"
 
 class Join: public Command {
 private:

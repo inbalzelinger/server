@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <cstdlib>
 #include "Join.h"
+#include "Play.h"
+void* playGame(void* gameToJoin);
 
 Join::Join(GameManeger *gameManager1) {
     this->gameManeger=gameManager1;
@@ -23,18 +25,36 @@ Join::Join(GameManeger *gameManager1) {
      char O ='2';
     //send 1 or 2 again to both clients
      int n = write(clientSocket1 , &X , sizeof(X));
-    if (n == -1) {
+     cout<<"join :"<<clientSocket1<<endl;
+     if (n == -1) {
         cout<<"error writing to socket"<<endl;
     }
     n = write(clientSocket2 , &O , sizeof(O));
     if (n == -1) {
         cout<<"error writing to socket"<<endl;
     }
-   close(clientSocket1);
-   close(clientSocket2);
+
+     pthread_t playTread;
+     vector<pthread_t> games;
+
+
+     n = pthread_create(&playTread, NULL, &playGame, (void*)gameToJoin);
+     games.push_back(playTread);
+     if (n) {
+         throw "Error creating client accept thread";
+     }
+
+
+   //close(clientSocket1);
+   //close(clientSocket2);
 }
 
 
+void* playGame(void* gameToJoin) {
+    Play play;
+    TwoClientsGame* twoClientsGame=(TwoClientsGame*)gameToJoin;
+    play.playGame(*twoClientsGame);
+}
 
 
 

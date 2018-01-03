@@ -29,7 +29,6 @@ struct SocketAndManager {
 
 
 
-
 void Server::start() {
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
@@ -47,7 +46,7 @@ void Server::start() {
 	struct SocketAndManager* data = new struct SocketAndManager;
 	data->socket = serverSocket;
 	data->cmd = commandMannager;
-	pthread_create(&serverThreadId, NULL, acceptClients, (void*)data);
+	pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
 	pthread_join(serverThreadId , NULL);
 	pthread_exit(NULL);
 
@@ -55,7 +54,7 @@ void Server::start() {
 
 
 
-    //    char  X ='1';
+//    char  X ='1';
 //        char O ='2';
 //        //send 1 to first client
 //        int n = write(clientSocket1 , &X , sizeof(X));
@@ -104,7 +103,7 @@ void Server::stop() {
 
 
 
-void* acceptClients(void* serverSocket) {
+void*acceptClients(void* serverSocket) {
 	vector<pthread_t> threads;
 		struct sockaddr_in clientAddress;
 		socklen_t clientAddressLen = {};
@@ -117,13 +116,12 @@ void* acceptClients(void* serverSocket) {
 			throw "ERROR ON ACCEPT";
 		}
 		cout << "client connected" << endl;
-		int p1;
 		struct SocketAndManager* clientData = new SocketAndManager;
 		clientData->socket = clientSocket1;
 		clientData->cmd = serverData->cmd;
 		pthread_t tread;
         cout<<clientData->socket<<endl;
-		pthread_create(&tread, NULL, handleClient, (void*)clientData);
+		pthread_create(&tread, NULL, &handleClient, (void*)clientData);
 		threads.push_back(tread);
 		//close(clientSocket1);
         for (int i = 0; i < threads.size(); i++) {
@@ -140,9 +138,7 @@ void* handleClient(void *clientSocketAndMeneger) {
 
 	struct SocketAndManager* clientData = (struct SocketAndManager*)clientSocketAndMeneger;
     cout<<clientData->socket;
-
 	int n = read(clientData->socket, &msg, sizeof(msg));
-
         if (n == -1) {
             cout << "handle: Error reading x" << endl;
             return false;
@@ -151,8 +147,7 @@ void* handleClient(void *clientSocketAndMeneger) {
             cout << "client disconnected" << endl;
             return false;
         }
-
-    cout<<msg<<endl;
+        cout<<msg<<endl;
         istringstream str(msg);
         string commandName;
         string tmp;
@@ -166,6 +161,7 @@ void* handleClient(void *clientSocketAndMeneger) {
             commandArgs.push_back(tmp);
         }
 	clientData->cmd->executeCommand(commandName , commandArgs);
+    return NULL;
 
 }
 

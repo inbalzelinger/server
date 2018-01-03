@@ -10,52 +10,57 @@
 #define MSGSIZE 20
 
 
+bool Play::playGame(TwoClientsGame &twoClientsGame1) {
+	char msg[7];
+	bool x = false;
+	int clientSocket1=twoClientsGame1.getClientOne();
+	int clientSocket2=twoClientsGame1.getClientTwo();
+	while (true) {
+		int n = read(clientSocket1, &msg, sizeof(msg));
+		if (n == -1) {
+			cout << "Error reading x" << endl;
+			return false;
+		}
+		if (n == 0) {
+			cout << "client disconnected" << endl;
+			return false;
+		}
+		n = write(clientSocket2, &msg, sizeof(msg));
+		if (n == -1) {
+			cout << "Error writing y" << endl;
+			return false;
+		}
 
-void Play::execute(vector<string> args) {
-	char msg[MSGSIZE];
+		if (x == true) {
+			n = read(clientSocket2, &msg, sizeof(msg));
+		}
 
+		n = read(clientSocket2, &msg, sizeof(msg));
 
+		if (n == -1) {
+			cout << "Error reading x" << endl;
+			return false;
+		}
+		if (n == 0) {
+			cout << "client disconnected" << endl;
+			return false;
+		}
+		n = write(clientSocket1, &msg, sizeof(msg));
 
-	//the x and y is in args[2]
+		if (n == -1) {
+			cout << "Error writing y" << endl;
+			return false;
+		}
+		if (msg[0] != 'N' && msg[1] != 'o') {
 
-	istringstream str(args[2]);
-	string x;
-	string y;
-
-	string tmp;
-	stringstream ss;
-
-	getline(str, x, ' ');
-	getline(str, y, ' ');
-
-	const char *xchar = x.c_str();
-	msg[0] = *xchar;
-
-	cout << msg[0];
-
-	const char *ychar = x.c_str();
-	msg[1] = *ychar;
-	cout << msg[1];
-
-	int player1Socket = atoi(args[0].c_str());
-	int player2Socket = atoi(args[1].c_str());
-	bool check = false;
-
-	int n = write(player2Socket, &msg, sizeof(msg));
-	if (n == -1) {
-		cout << "Error writing the move to player 2" << endl;
-		return;
-	}
-	n = read(player2Socket, &msg, sizeof(msg));
-	if (n == -1) {
-		cout << "Error reading x" << endl;
-		return;
-	}
-	if (n == 0) {
-		cout << "client disconnected" << endl;
-		return;
+			x = true;
+			n = read(clientSocket1, &msg, sizeof(msg));
+		} else {
+			x = false;
+		}
 	}
 }
+
 
 
 

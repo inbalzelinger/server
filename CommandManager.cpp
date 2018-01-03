@@ -14,9 +14,6 @@ CommandManager::CommandManager() {
 	commandsMap["start"] = new StartGame(this->gameManager);
     commandsMap["listGames"] = new ListGames(this->gameManager);
 	commandsMap["join"] = new Join(this->gameManager);
-//	commandsMap["play"] = new Play;
-//	commandsMap["close"] = new Close;
-
 }
 
 
