@@ -11,7 +11,17 @@
 using  namespace std;
 class Command {
 public:
-    virtual void execute(vector<string> args)=0;
+
+	/**
+* finction name: execute
+* execute the command.
+*/
+	virtual void execute(vector<string> args)=0;
+
+	/**
+* finction name: ~Command
+* dstructor
+*/
     virtual ~Command() {}
 };
 

@@ -53,7 +53,7 @@ public:
 	void removeGame(string name);
 
 	/**
-* finction name: TwoClientsGame
+* function name: TwoClientsGame
 * get name of a game and return the twoClientsGame which is called that way.
 *@param string - name.
 */
@@ -61,11 +61,16 @@ public:
 	TwoClientsGame* getGame(string name);
 
 	/**
-* finction name: getAvailableGams
+* function name: getAvailableGams
 * get the list of the avaleble games.
 */
 
 	vector<string>getAvailableGams();
+
+	/**
+* function name: SendStopToEveryOne
+* send stop to all the clients sockets in the games list.
+*/
 
 	void SendStopToEveryOne();
 

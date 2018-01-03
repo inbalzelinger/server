@@ -23,10 +23,11 @@ public:
     Join(GameManeger *gameManager1);
 
 	/**
-* finction name: execute
-* treat the command join. -if the game exist so join it
- * @param args - hold clients socket and the name of the game to join to.
+* function name: execute
+* treat the command list_games. -send the list of the games.
+ * @param args - hold client socket
 */
+
     void execute(vector<string> args);
 
 };

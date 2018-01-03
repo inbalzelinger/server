@@ -34,6 +34,13 @@ public:
 */
     void executeCommand(string command,vector<string> args);
 
+
+	/**
+* finction name: getGameManagar
+* return the game manager
+* @return GameManeger
+*/
+
 	GameManeger* getGameManagar();
 
 

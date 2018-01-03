@@ -33,7 +33,7 @@ public:
 	void execute(vector<string> args);
 
 	/**
-* finction name: addNewGame
+* function name: addNewGame
 * tread of game between two clients.
 * @param game - the two clients game (the sockets of the clients and the game name.
 */

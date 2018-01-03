@@ -14,7 +14,16 @@ class ListGames: public Command {
 private:
     GameManeger *gameManager;
 public:
+	/**
+* function name: ListGames
+* construct the ListGames command.
+*/
     ListGames(GameManeger *gameManager1);
+
+/**
+* function name: execute
+*
+*/
     void execute(vector<string> args);
 
 };
