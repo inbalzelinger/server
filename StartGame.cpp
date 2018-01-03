@@ -35,7 +35,7 @@ void StartGame::execute(vector<string> args) {
 	}
 	addNewGame(twoClientsGame);
 	n = write(atoi(args[0].c_str()) , &X , 1);
-//	n = write(atoi(args[0].c_str()) , "1" , 1);
+
 }
 
 

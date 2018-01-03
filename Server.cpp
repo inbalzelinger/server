@@ -138,7 +138,7 @@ void* handleClient(void *clientSocketAndMeneger) {
 
 	struct SocketAndManager* clientData = (struct SocketAndManager*)clientSocketAndMeneger;
     cout<<clientData->socket;
-	int n = read(clientData->socket, &msg, sizeof(msg));
+	int n = read(clientData->socket, &msg, MSGSIZE);
         if (n == -1) {
             cout << "handle: Error reading x" << endl;
             return false;
