@@ -37,7 +37,6 @@ Join::Join(GameManeger *gameManager1) {
      pthread_t playTread;
      vector<pthread_t> games;
 
-
      n = pthread_create(&playTread, NULL, &playGame, (void*)gameToJoin);
      games.push_back(playTread);
      if (n) {
