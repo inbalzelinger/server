@@ -21,6 +21,15 @@ private:
 	bool isAvailable;
 
 public:
+
+	/**
+* function name: TwoClientsGame
+* constructor.
+* @param name - gameName
+* @param clientOne - client one socket.
+* @param clientTwo - client two socket.
+*/
+
 	TwoClientsGame(string name , int clientOne , int clientTwo);
 	string getName();
 	void setPlayerOne(int clientOne);
