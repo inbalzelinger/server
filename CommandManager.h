@@ -17,7 +17,7 @@ public:
 * finction name: CommandManager
 * construct command meneger..
 */
-    CommandManager();
+    CommandManager(vector<pthread_t> *threadsVector);
 
 	/**
 * finction name: ~CommandManager

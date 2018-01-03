@@ -19,7 +19,7 @@ public:
  * @param commandManager
  */
 
-    Server(int port ,  CommandManager &commandManager);
+    Server(int port ,  CommandManager &commandManager , vector<pthread_t> *threadsVector);
 
     /**
 * finction name: start
@@ -42,7 +42,7 @@ private:
     int serverSocket;
     pthread_t serverThreadId;
     CommandManager* commandMannager;
-
+    vector<pthread_t>*  threadsVector;
 
 };
 

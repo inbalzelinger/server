@@ -6,10 +6,14 @@
 #include <cstdlib>
 #include "Join.h"
 #include "Play.h"
+
+pthread_mutex_t joinMutex;
+
 void* playGame(void* gameToJoin);
 
-Join::Join(GameManeger *gameManager1) {
+Join::Join(GameManeger *gameManager1 , vector<pthread_t> *threadsVector) {
     this->gameManeger = gameManager1;
+    this->threadsVector = threadsVector;
 }
 
  void Join::execute(vector<string> args) {
@@ -30,7 +34,6 @@ Join::Join(GameManeger *gameManager1) {
      char O ='2';
     //send 1 or 2 again to both clients
      int n = write(clientSocket1 , &X , sizeof(X));
-     cout<<"join :"<<clientSocket1<<endl;
      if (n == -1) {
         cout<<"error writing to socket"<<endl;
     }
@@ -38,14 +41,14 @@ Join::Join(GameManeger *gameManager1) {
     if (n == -1) {
         cout<<"error writing to socket"<<endl;
     }
-
      pthread_t playTread;
      vector<pthread_t> games;
-
-
      n = pthread_create(&playTread, NULL, &playGame, (void*)gameToJoin);
-     games.push_back(playTread);
+     this->threadsVector->push_back(playTread);
 
+     pthread_mutex_lock(&joinMutex);
+     games.push_back(playTread);
+     pthread_mutex_unlock(&joinMutex);
 
      if (n) {
          throw "Error creating client accept thread";

@@ -11,12 +11,14 @@ int main() {
     string port;
     ifstream inFile;
     /////take of the ../
-    inFile.open("../settings.txt");
+    inFile.open("settings.txt");
     getline(inFile, port);
     inFile.close();
-    CommandManager commandManager;
     GameManeger *gameManeger = new GameManeger;
-    Server s(atoi(port.c_str()) , commandManager);
+
+    vector<pthread_t> treadsVector;
+    CommandManager commandManager(&treadsVector);
+    Server s(atoi(port.c_str()) , commandManager , &treadsVector);
     try {
 		s.start();
 

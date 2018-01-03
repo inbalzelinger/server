@@ -18,15 +18,15 @@ using  namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
 
-Server::Server(int port , CommandManager &comandMng): port(port),serverSocket(0), commandMannager(&comandMng)
-, serverThreadId(0) {}
+Server::Server(int port , CommandManager &comandMng , vector<pthread_t> *threadsVector): port(port),serverSocket(0), commandMannager(&comandMng)
+, serverThreadId(0), threadsVector(threadsVector) {}
 
 
 struct SocketAndManager {
 	int socket;
 	CommandManager* cmd;
+    vector<pthread_t>* threadsVector;
 };
-
 
 
 void Server::start() {
@@ -46,39 +46,46 @@ void Server::start() {
 	struct SocketAndManager* data = new struct SocketAndManager;
 	data->socket = serverSocket;
 	data->cmd = commandMannager;
+    data->threadsVector = this->threadsVector;
+
+
 	cout<<"Enter exit to stop the server"<<endl;
 
 	pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
-	string str;
+
+    this->threadsVector->push_back(serverThreadId);
+
+    string str;
 	cin>>str;
-	if (str == "exit") {
+    if (strcmp(str.c_str(), "exit")==0) {
 		this->stop();
 		return;
 	}
-	pthread_join(serverThreadId , NULL);
+	//pthread_join(serverThreadId , NULL);
 	pthread_exit(NULL);
 }
 
 
 
 void Server::stop() {
-	pthread_cancel(serverThreadId);
-	pthread_join(serverThreadId , NULL);
+    pthread_cancel(serverThreadId);
+    pthread_join(serverThreadId , NULL);
+    for (int i = 0; i < this->threadsVector->size() ; i++) {
+      //  pthread_cancel(this->threadsVector[0]);
 
-
-
-
+    }
     close(serverSocket);
 	cout<<"server Stoped"<<endl;
+    this->commandMannager->getGameManagar()->SendStopToEveryOne();
 }
 
 
 
 
 void*acceptClients(void* serverSocket) {
-	vector<pthread_t> threads;
+//	vector<pthread_t> threads;
 		struct sockaddr_in clientAddress;
-		socklen_t clientAddressLen = {};
+		socklen_t clientAddressLen;
 	while (true) {
 	cout << "waiting for clients connections.." << endl;
 		struct SocketAndManager* serverData = (struct SocketAndManager*)serverSocket;
@@ -87,17 +94,19 @@ void*acceptClients(void* serverSocket) {
 			throw "ERROR ON ACCEPT";
 		}
 		cout << "client connected" << endl;
+
 		struct SocketAndManager* clientData = new SocketAndManager;
 		clientData->socket = clientSocket1;
 		clientData->cmd = serverData->cmd;
+        clientData->threadsVector = serverData->threadsVector;
 		pthread_t tread;
-        cout<<clientData->socket<<endl;
-
 		pthread_create(&tread, NULL, &handleClient, (void*)clientData);
-		threads.push_back(tread);
-        for (int i = 0; i < threads.size(); i++) {
-            pthread_join(threads[i], NULL);
-         }
+        clientData->threadsVector->push_back(tread);
+
+		//threads.push_back(tread);
+       // for (int i = 0; i < threads.size(); i++) {
+         //   pthread_join(threads[i], NULL);
+        // }
 	}
 }
 
@@ -107,17 +116,16 @@ void*acceptClients(void* serverSocket) {
 void* handleClient(void *clientSocketAndMeneger) {
     char msg[MSGSIZE];
 	struct SocketAndManager* clientData = (struct SocketAndManager*)clientSocketAndMeneger;
-    cout<<clientData->socket;
 	int n = read(clientData->socket, &msg, MSGSIZE);
         if (n == -1) {
-            cout << "handle: Error reading x" << endl;
-            return false;
+            cout << " Error reading " << endl;
+            return  (void*)false;
         }
         if (n == 0) {
             cout << "client disconnected" << endl;
-            return false;
+            return (void*) false;
         }
-        cout<<msg<<endl;
+
         istringstream str(msg);
         string commandName;
         string tmp;

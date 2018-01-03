@@ -11,7 +11,7 @@ void ListGames::execute(vector<string> args) {
         int socket = atoi(args[0].c_str());
         vector<string>availableGames=this->gameManager->getAvailableGams();
         char message[MSGSIZE];
-    if(availableGames.size()==0){
+    if(availableGames.empty()){
         string strmsg="no available games";
         strcpy(message,strmsg.c_str());
     } else {
@@ -26,7 +26,7 @@ void ListGames::execute(vector<string> args) {
         }
         message[k-1] = '\0';
     }
-        int n = static_cast<int>(write(socket, &message, MSGSIZE));
+        int n = write(socket, &message, MSGSIZE);
         if (n == -1) {
             cout << "Error writing to socket" << endl;
             throw "Error writing to socket";

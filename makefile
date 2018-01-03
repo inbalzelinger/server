@@ -1,8 +1,6 @@
-a.out: Server.o main.o
-	g++ Server.o main.o
+a.out: compileAll
+	g++ -pthread *.o -o ../../exe/server.out
+	rm -f *.o
 
-Server.o: Server.cpp Server.h
-	g++ -c Server.cpp
-
-main.o: main.cpp
-	g++ -c main.cpp
+compileAll: *.cpp *.h
+	g++ -pthread -c *.cpp

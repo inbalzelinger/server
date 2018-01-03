@@ -7,17 +7,17 @@
 #include "StartGame.h"
 #include "Join.h"
 
-CommandManager::CommandManager() {
+CommandManager::CommandManager(vector<pthread_t> *threadsVector) {
+
     this->gameManager = new GameManeger();
 	commandsMap["start"] = new StartGame(this->gameManager);
     commandsMap["list_games"] = new ListGames(this->gameManager);
-	commandsMap["join"] = new Join(this->gameManager);
+	commandsMap["join"] = new Join(this->gameManager ,  threadsVector);
 }
 
 
 
 void CommandManager::executeCommand(string command, vector<string> args) {
-    cout<<command<<endl;
     Command* commandObj = commandsMap[command];
     commandObj->execute(args);
 }

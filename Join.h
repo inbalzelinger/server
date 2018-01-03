@@ -13,6 +13,8 @@
 class Join: public Command {
 private:
     GameManeger *gameManeger;
+    vector<pthread_t>*  threadsVector;
+
 public:
 
 	/**
@@ -20,7 +22,7 @@ public:
 * construct a join command , getting game managaer.
 	 * @param gameManager1 - hold the list of the games.
 */
-    Join(GameManeger *gameManager1);
+    Join(GameManeger *gameManager1 ,  vector<pthread_t> *threadsVector);
 
 	/**
 * function name: execute
