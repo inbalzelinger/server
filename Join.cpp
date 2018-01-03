@@ -14,10 +14,15 @@ Join::Join(GameManeger *gameManager1) {
 
  void Join::execute(vector<string> args) {
      TwoClientsGame *gameToJoin;
+     int socket = atoi(args[0].c_str());
      if (gameManeger->inList(args[1])) {
          gameToJoin = gameManeger->getGame(args[1]);
      }
-     int socket = atoi(args[0].c_str());
+     else{
+         char x='0';
+         int n = write(socket , &x , sizeof(x));
+         return;
+     }
      gameToJoin->setPlayerTwo(socket);
      int clientSocket1=gameToJoin->getClientOne();
      int clientSocket2=gameToJoin->getClientTwo();

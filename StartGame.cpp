@@ -33,6 +33,7 @@ void StartGame::execute(vector<string> args) {
 			cout<<"error writing to socket"<<endl;
 		}
 	}
+
 	addNewGame(twoClientsGame);
 	n = write(atoi(args[0].c_str()) , &X , 1);
 

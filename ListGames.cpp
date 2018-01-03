@@ -3,26 +3,29 @@
 //
 
 #include <unistd.h>
+#include <cstring>
 #include "ListGames.h"
-#define MSGSIZE 100
+#define MSGSIZE 150
 ListGames::ListGames(GameManeger *gameManager1):gameManager(gameManager1) {}
 void ListGames::execute(vector<string> args) {
         int socket = atoi(args[0].c_str());
         vector<string>availableGames=this->gameManager->getAvailableGams();
         char message[MSGSIZE];
     if(availableGames.size()==0){
-        string msg="no available games";
-    }
-        int k=0;
+        string strmsg="no available games";
+        strcpy(message,strmsg.c_str());
+    } else {
+        int k = 0;
         for (int i = 0; i < availableGames.size(); i++) {
-            for (int j = 0; j <availableGames[i].size() ; j++) {
-                message[k]=availableGames[i][j];
+            for (int j = 0; j < availableGames[i].size(); j++) {
+                message[k] = availableGames[i][j];
                 k++;
             }
-            message[k]=',';
+            message[k] = ',';
             k++;
         }
-    message[k]='\0';
+        message[k-1] = '\0';
+    }
         int n = static_cast<int>(write(socket, &message, MSGSIZE));
         if (n == -1) {
             cout << "Error writing to socket" << endl;

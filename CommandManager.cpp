@@ -12,7 +12,7 @@
 CommandManager::CommandManager() {
     this->gameManager = new GameManeger();
 	commandsMap["start"] = new StartGame(this->gameManager);
-    commandsMap["listGames"] = new ListGames(this->gameManager);
+    commandsMap["list_games"] = new ListGames(this->gameManager);
 	commandsMap["join"] = new Join(this->gameManager);
 }
 
