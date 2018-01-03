@@ -11,7 +11,7 @@ int main() {
     string port;
     ifstream inFile;
     /////take of the ../
-    inFile.open("settings.txt");
+    inFile.open("../settings.txt");
     getline(inFile, port);
     inFile.close();
     GameManeger *gameManeger = new GameManeger;

@@ -85,7 +85,7 @@ void Server::stop() {
 void*acceptClients(void* serverSocket) {
 //	vector<pthread_t> threads;
 		struct sockaddr_in clientAddress;
-		socklen_t clientAddressLen;
+		socklen_t clientAddressLen = {};
 	while (true) {
 	cout << "waiting for clients connections.." << endl;
 		struct SocketAndManager* serverData = (struct SocketAndManager*)serverSocket;
