@@ -7,18 +7,19 @@
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
-
+#include "ThreadPool.h
 
 static void* handleClient(void *clientSocketAndMeneger);
 static void* acceptClients(void* serverSocket);
 
 
 #define MSGSIZE 20
+#define THREADS_NUM 5
 using  namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
 
-Server::Server(int port , CommandManager &comandMng , vector<pthread_t> *threadsVector): port(port),serverSocket(0), commandMannager(&comandMng)
+Server::Server(int port , CommandManager &commandMng , vector<pthread_t> *threadsVector): port(port),serverSocket(0), commandMannager(&comandMng)
 , serverThreadId(0), threadsVector(threadsVector) {}
 
 
@@ -30,6 +31,7 @@ struct SocketAndManager {
 
 
 void Server::start() {
+    ThreadPool pool(THREADS_NUM);
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         throw "ERROR OPENING SOCKET";
@@ -61,7 +63,6 @@ void Server::start() {
 		this->stop();
 		return;
 	}
-	//pthread_join(serverThreadId , NULL);
 	pthread_exit(NULL);
 }
 
@@ -79,7 +80,7 @@ void Server::stop() {
     this->commandMannager->getGameManagar()->SendStopToEveryOne();
 }
 
-
+Task
 
 
 void*acceptClients(void* serverSocket) {
