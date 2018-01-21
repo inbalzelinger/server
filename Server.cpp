@@ -81,6 +81,8 @@ void Server::stop(ThreadPool &pool) {
 
     }
     close(serverSocket);
+
+
 	cout<<"server Stoped"<<endl;
     this->commandMannager->getGameManagar()->SendStopToEveryOne();
 }
