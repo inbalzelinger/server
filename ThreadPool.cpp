@@ -11,7 +11,10 @@ ThreadPool::ThreadPool(int threadsNum) :stopped(false){
         pthread_create(threads + i, NULL, execute, this);
     }
     pthread_mutex_init(&lock,NULL);
-    }
+}
+
+
+
 void* ThreadPool::execute(void *args) {
     ThreadPool *pool=(ThreadPool*)args;
     pool->executeTasks();
@@ -20,7 +23,7 @@ void ThreadPool::addTask(Task *task) {
     tasksQueue.push(task);
 }
 void ThreadPool::executeTasks() {
-    while (! stopped) {
+    while (!stopped) {
         pthread_mutex_lock(&lock);
         if (!tasksQueue.empty()) {
             Task *task = tasksQueue.front();
@@ -36,7 +39,6 @@ void ThreadPool::executeTasks() {
 void* ThreadPool::terminate() {
     pthread_mutex_destroy(&lock);
     stopped= true;
-
 }
 ThreadPool::~ThreadPool() {
     delete []threads;

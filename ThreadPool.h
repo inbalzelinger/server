@@ -16,7 +16,7 @@ class ThreadPool {
 public:
     ThreadPool(int threadsNum);
     void addTask(Task *task);
-    void terminate();
+    void* terminate();
     virtual ~ThreadPool();
 
 private:

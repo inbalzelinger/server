@@ -27,17 +27,12 @@ struct SocketAndManager {
 	int socket;
 	CommandManager* cmd;
     vector<pthread_t>* threadsVector;
+    ThreadPool *threadPool;
 };
 
 
 void Server::start() {
-    ThreadPool *pool=new ThreadPool(THREADS_NUM);
-    Task *tasks[THREADS_NUM];
-
-    for (int i = 0; i <THREADS_NUM ; ++i) {
-        tasks[i]=new Task(acceptClients,(void*)this->serverSocket);
-        pool->addTask(tasks[i]);
-    }
+    ThreadPool *pool = new ThreadPool(THREADS_NUM);
 
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
@@ -56,18 +51,17 @@ void Server::start() {
 	data->socket = serverSocket;
 	data->cmd = commandMannager;
     data->threadsVector = this->threadsVector;
+    data->threadPool=pool;
 
 	cout<<"Enter exit to stop the server"<<endl;
 
-    //pool->addTask(new Task(acceptClients,(void*)this->serverSocket));
-
-	//pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
+	pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
     //this->threadsVector->push_back(serverThreadId);
 
     string str;
 	cin>>str;
     if (strcmp(str.c_str(), "exit")==0) {
-		this->stop();
+		this->stop(*pool);
 		return;
 	}
 	pthread_exit(NULL);
@@ -75,9 +69,10 @@ void Server::start() {
 
 
 
-void Server::stop() {
+void Server::stop(ThreadPool &pool) {
     pthread_cancel(serverThreadId);
     pthread_join(serverThreadId , NULL);
+    pool.terminate();
     for (int i = 0; i < this->threadsVector->size() ; i++) {
       //  pthread_cancel(this->threadsVector[0]);
 
@@ -108,9 +103,10 @@ void*acceptClients(void* serverSocket) {
 		clientData->cmd = serverData->cmd;
         clientData->threadsVector = serverData->threadsVector;
 		pthread_t tread;
-		pthread_create(&tread, NULL, &handleClient, (void*)clientData);
-        clientData->threadsVector->push_back(tread);
-
+        Task *task=new Task(handleClient,(void*)clientData);
+        serverData->threadPool->addTask(task);
+		//pthread_create(&tread, NULL, &handleClient, (void*)clientData);
+        //clientData->threadsVector->push_back(tread);
 		//threads.push_back(tread);
        // for (int i = 0; i < threads.size(); i++) {
          //   pthread_join(threads[i], NULL);

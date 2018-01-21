@@ -7,7 +7,7 @@
 
 #include "GameManeger.h"
 #include "CommandManager.h"
-
+#include "ThreadPool.h"
 class Server {
 
 public:
@@ -33,7 +33,7 @@ public:
 * close the main server thread, closed the handle clients threads
      * and close the server socket thread.
 */
-    void  stop();
+    void  stop(ThreadPool &pool);
 
 
 
