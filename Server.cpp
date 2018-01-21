@@ -55,12 +55,7 @@ void Server::start() {
 
 	cout<<"Enter exit to stop the server"<<endl;
 
-<<<<<<< Updated upstream
 	pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
-=======
-    //pool->addTask(new Task(acceptClients,(void*)this->serverSocket));
-	//pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
-
     //this->threadsVector->push_back(serverThreadId);
     string str;
     cin >> str;
@@ -80,13 +75,12 @@ void Server::start() {
 void Server::stop(ThreadPool &pool) {
     pthread_cancel(serverThreadId);
     pthread_join(serverThreadId , NULL);
-    for (int i = 0; i < this->threadsVector->size() ; i++) {
+    pool.terminate();
+    //for (int i = 0; i < this->threadsVector->size() ; i++) {
       //  pthread_cancel(this->threadsVector[0]);
 
-    }
+    //}
     close(serverSocket);
-
-
 	cout<<"server Stoped"<<endl;
     this->commandMannager->getGameManagar()->SendStopToEveryOne();
 }
