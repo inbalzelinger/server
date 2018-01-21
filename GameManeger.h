@@ -58,6 +58,7 @@ public:
 *@param string - name.
 */
 
+
 	TwoClientsGame* getGame(string name);
 
 	/**

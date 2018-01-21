@@ -57,6 +57,7 @@ vector<string> GameManeger::getAvailableGams() {
 }
 
 
+
 void GameManeger::SendStopToEveryOne(){
 	for (int i = 0; i < this->gamesList.size(); i++) {
 		int clientOne=gamesList[i].getClientOne();

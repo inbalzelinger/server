@@ -26,6 +26,7 @@ void ListGames::execute(vector<string> args) {
         }
         message[k-1] = '\0';
     }
+
         int n = write(socket, &message, MSGSIZE);
         if (n == -1) {
             cout << "Error writing to socket" << endl;

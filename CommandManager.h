@@ -25,6 +25,7 @@ public:
 */
     ~CommandManager();
 
+
 	/**
 * finction name: executeCommand
 * create an object regarding the command

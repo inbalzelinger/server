@@ -31,6 +31,7 @@ bool Play::playGame(TwoClientsGame &twoClientsGame1) {
 			return false;
 		}
 
+
 		if (x == true) {
 			n = read(clientSocket2, &msg, sizeof(msg));
 		}

@@ -19,6 +19,7 @@ int main() {
     vector<pthread_t> treadsVector;
     CommandManager commandManager(&treadsVector);
 
+
     Server s(atoi(port.c_str()) , commandManager , &treadsVector);
     try {
 		s.start();

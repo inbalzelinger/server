@@ -62,6 +62,7 @@ void Server::start() {
     while (strcmp(str.c_str(), "exit") != 0) {
         cin >> str;
     }
+
    if( strcmp(str.c_str(), "exit") == 0){
         this->stop(*pool);
         return;

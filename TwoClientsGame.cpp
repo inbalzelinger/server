@@ -5,7 +5,8 @@
 #include "TwoClientsGame.h"
 
 TwoClientsGame::TwoClientsGame(string name , int clientOne , int clientTwo):gameName(name),
-																			playerOne(clientOne) ,
+
+																									playerOne(clientOne) ,
 																			playerTwo(clientTwo)  {
 	this->isAvailable= true;
 }

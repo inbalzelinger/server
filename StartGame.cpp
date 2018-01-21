@@ -15,6 +15,7 @@ this->gameManeger = gameManeger;
 
 
 
+
  void* StartGame::addNewGame(void* game) {
 	TwoClientsGame *twoClientsGame=(TwoClientsGame*)game;
 	gameManeger->addGame(*twoClientsGame);

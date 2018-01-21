@@ -37,6 +37,7 @@ public:
 * tread of game between two clients.
 * @param game - the two clients game (the sockets of the clients and the game name.
 */
+
 	void* addNewGame(void* game);
 
 };

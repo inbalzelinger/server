@@ -68,6 +68,7 @@ public:
 */
 	int getClientTwo();
 
+
 	/**
 * function name: setIsAvailable
 * set the availble field of the game.

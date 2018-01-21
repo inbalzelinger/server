@@ -46,6 +46,7 @@ Join::Join(GameManeger *gameManager1 , vector<pthread_t> *threadsVector) {
      n = pthread_create(&playTread, NULL, &playGame, (void*)gameToJoin);
      this->threadsVector->push_back(playTread);
 
+
      pthread_mutex_lock(&joinMutex);
      games.push_back(playTread);
      pthread_mutex_unlock(&joinMutex);
