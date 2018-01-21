@@ -57,13 +57,16 @@ void Server::start() {
 
 	pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
     //this->threadsVector->push_back(serverThreadId);
-
     string str;
-	cin>>str;
-    if (strcmp(str.c_str(), "exit")==0) {
-		this->stop(*pool);
-		return;
-	}
+    cin >> str;
+    while (strcmp(str.c_str(), "exit") != 0) {
+        cin >> str;
+    }
+   if( strcmp(str.c_str(), "exit") == 0){
+        this->stop(*pool);
+        return;
+    }
+
 	pthread_exit(NULL);
 }
 
@@ -110,7 +113,7 @@ void*acceptClients(void* serverSocket) {
 		//threads.push_back(tread);
        // for (int i = 0; i < threads.size(); i++) {
          //   pthread_join(threads[i], NULL);
-        // }
+       //  }
 	}
 }
 
