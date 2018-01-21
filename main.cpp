@@ -16,6 +16,7 @@ int main() {
     inFile.close();
     GameManeger *gameManeger = new GameManeger;
 
+
     vector<pthread_t> treadsVector;
     CommandManager commandManager(&treadsVector);
 
