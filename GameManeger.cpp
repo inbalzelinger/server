@@ -65,6 +65,7 @@ void GameManeger::SendStopToEveryOne(){
 			string exit = "exit";
 			strcpy(msg,exit.c_str());
 		int n = write(clientOne, &msg, sizeof(msg));
+
 		if (n == -1) {
 			cout << "Error writing y" << endl;
 			return;
