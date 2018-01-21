@@ -15,9 +15,24 @@ using namespace std;
 class ThreadPool {
 
 public:
+    /**
+     * constructor
+     * @param threadsNum
+     */
     ThreadPool(int threadsNum);
+    /**
+     * add given task to the queue
+     * @param task
+     */
     void addTask(Task *task);
+    /**
+     * end all process
+     * @return
+     */
     void* terminate();
+    /**
+     * distructor
+     */
     virtual ~ThreadPool();
 
 private:

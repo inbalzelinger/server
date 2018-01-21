@@ -9,12 +9,23 @@
 
 class Task {
 public:
+    /**
+     * constructor
+     * @param func
+     * @param arg
+     */
     Task(void*(*func)(void *arg),void* arg):
             func(func),arg(arg){}
+    /**
+     * call func
+     */
     void execute(){
         func(arg);
 
     }
+/**
+ *distructor
+ */
     virtual ~Task(){}
 
 private:
