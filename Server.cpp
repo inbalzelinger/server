@@ -80,7 +80,7 @@ void Server::stop() {
     this->commandMannager->getGameManagar()->SendStopToEveryOne();
 }
 
-Task
+
 
 
 void*acceptClients(void* serverSocket) {
