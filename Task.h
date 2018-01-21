@@ -6,8 +6,6 @@
 #define SERVER_TASK_H
 
 
-#include <gawkapi.h>
-
 class Task {
 public:
     Task(void*(*func)(void *arg),void* arg):

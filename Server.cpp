@@ -7,7 +7,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
-#include "ThreadPool.h
+#include "ThreadPool.h"
 
 static void* handleClient(void *clientSocketAndMeneger);
 static void* acceptClients(void* serverSocket);
@@ -19,7 +19,7 @@ using  namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
 
-Server::Server(int port , CommandManager &commandMng , vector<pthread_t> *threadsVector): port(port),serverSocket(0), commandMannager(&comandMng)
+Server::Server(int port , CommandManager &commandMng , vector<pthread_t> *threadsVector): port(port),serverSocket(0), commandMannager(&commandMng)
 , serverThreadId(0), threadsVector(threadsVector) {}
 
 
@@ -31,7 +31,14 @@ struct SocketAndManager {
 
 
 void Server::start() {
-    ThreadPool pool(THREADS_NUM);
+    ThreadPool *pool=new ThreadPool(THREADS_NUM);
+    Task *tasks[THREADS_NUM];
+
+    for (int i = 0; i <THREADS_NUM ; ++i) {
+        tasks[i]=new Task(acceptClients,(void*)this->serverSocket);
+        pool->addTask(tasks[i]);
+    }
+
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         throw "ERROR OPENING SOCKET";
@@ -50,12 +57,12 @@ void Server::start() {
 	data->cmd = commandMannager;
     data->threadsVector = this->threadsVector;
 
-
 	cout<<"Enter exit to stop the server"<<endl;
 
-	pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
+    //pool->addTask(new Task(acceptClients,(void*)this->serverSocket));
 
-    this->threadsVector->push_back(serverThreadId);
+	//pthread_create(&serverThreadId, NULL, &acceptClients, (void*)data);
+    //this->threadsVector->push_back(serverThreadId);
 
     string str;
 	cin>>str;
